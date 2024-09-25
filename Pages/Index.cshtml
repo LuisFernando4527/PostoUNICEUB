@@ -1,0 +1,19 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@foreach (var usuario in Model.ListaUsuarios)
+{
+    <p>
+        @usuario.nmUsuario
+        <br>
+         @usuario.edEmail
+         <br>
+         @usuario.nuTelefone
+         <br>
+         @usuario.idUsuario
+
+    </p>
+}
