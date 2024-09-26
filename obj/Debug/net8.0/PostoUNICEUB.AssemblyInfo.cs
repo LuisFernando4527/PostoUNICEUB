@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PostoUNICEUB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fddef933c3b9e2c60a8ca2164589a94f7347d48a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cd6697023f16980d12b9d821fb9c81bf50906db")]
 [assembly: System.Reflection.AssemblyProductAttribute("PostoUNICEUB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PostoUNICEUB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
