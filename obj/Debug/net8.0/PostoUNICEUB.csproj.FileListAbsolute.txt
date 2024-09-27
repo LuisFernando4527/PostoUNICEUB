@@ -134,3 +134,4 @@ C:\Users\luism\source\repos\PostoCEUB\PostoUNICEUB\obj\Debug\net8.0\refint\Posto
 C:\Users\luism\source\repos\PostoCEUB\PostoUNICEUB\obj\Debug\net8.0\PostoUNICEUB.pdb
 C:\Users\luism\source\repos\PostoCEUB\PostoUNICEUB\obj\Debug\net8.0\PostoUNICEUB.genruntimeconfig.cache
 C:\Users\luism\source\repos\PostoCEUB\PostoUNICEUB\obj\Debug\net8.0\ref\PostoUNICEUB.dll
+C:\Users\luism\source\repos\PostoCEUB\PostoUNICEUB\obj\Debug\net8.0\PostoUNICEUB.sourcelink.json
