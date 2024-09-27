@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace PostoCeub.Data.Entities
+namespace PostoUNICEUB.Data.Entities
 {
     public class PostoCeubDbContext : DbContext
     {
