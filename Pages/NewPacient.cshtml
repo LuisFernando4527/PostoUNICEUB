@@ -1,0 +1,155 @@
+@page
+@model PostoUNICEUB.Pages.NewPacientModel
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/new-pacient.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Cadastro de paciente</h1>
+
+        <div class="form-content">
+            <div class="button-group">
+                <button type="button" class="btn-type-user active" onclick="showForm('aluno', this)">Aluno</button>
+                <button type="button" class="btn-type-user" onclick="showForm('colaborador', this)">Colaborador</button>
+                <button type="button" class="btn-type-user" onclick="showForm('paciente', this)">Externo</button>
+            </div>
+            <form method="post">
+                <input type="hidden" id="pacienteType" name="pacienteType" value="aluno" />
+                <!-- Common fields for all patient types -->
+                <div class="ceub-form-group">
+                    <label asp-for="Paciente.nmPaciente">Nome</label>
+                    <input asp-for="Paciente.nmPaciente" />
+                    <span asp-validation-for="Paciente.nmPaciente" class="text-danger"></span>
+                </div>
+                <div class="ceub-form-group cel-group">
+                    <div class="ddd-group">
+                        <label asp-for="Paciente.nuDDDCelular">DDD Celular</label>
+                        <input asp-for="Paciente.nuDDDCelular" />
+                        <span asp-validation-for="Paciente.nuDDDCelular" class="text-danger"></span>
+
+
+                    </div>
+                    <div class="number-group">
+                        <label asp-for="Paciente.nuCelular">Celular</label>
+                        <input asp-for="Paciente.nuCelular" />
+                        <span asp-validation-for="Paciente.nuCelular" class="text-danger"></span>
+                    </div>
+                </div>
+                    <div class="ceub-form-group">
+                        <label asp-for="Paciente.nuCPF">CPF</label>
+                        <input asp-for="Paciente.nuCPF" />
+                        <span asp-validation-for="Paciente.nuCPF" class="text-danger"></span>
+                    </div>
+                    <div class="ceub-form-group">
+                        <label asp-for="Paciente.dtNascimento">Data de Nascimento</label>
+                        <input asp-for="Paciente.dtNascimento" />
+                        <span asp-validation-for="Paciente.dtNascimento" class="text-danger"></span>
+                    </div>
+
+                    <!-- Student fields -->
+                    <div id="aluno-fields" style="display: block;">
+                        <div class="ceub-form-group">
+                            <label asp-for="Aluno.curso">Curso</label>
+                            <input asp-for="Aluno.curso" id="aluno-curso" />
+                            <span asp-validation-for="Aluno.curso" class="text-danger"></span>
+                        </div>
+                        <div class="ceub-form-group">
+                            <label asp-for="Aluno.ra">RA</label>
+                            <input asp-for="Aluno.ra" id="aluno-ra" />
+                            <span asp-validation-for="Aluno.ra" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Collaborator fields -->
+                    <div id="colaborador-fields" style="display: none;">
+                        <div class="ceub-form-group">
+                            <label asp-for="Colaborador.departamento">Departamento</label>
+                            <input asp-for="Colaborador.departamento" id="colaborador-departamento" />
+                            <span asp-validation-for="Colaborador.departamento" class="text-danger"></span>
+                        </div>
+                        <div class="ceub-form-group">
+                            <label asp-for="Colaborador.matricula">Matrícula</label>
+                            <input asp-for="Colaborador.matricula" id="colaborador-matricula" />
+                            <span asp-validation-for="Colaborador.matricula" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- External patient has no additional fields -->
+
+                    <button type="submit">Cadastrar</button>
+</form>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+
+    function showForm(type, button) {
+        console.log('entoru');
+        document.getElementById('pacienteType').value = type;
+        // Hide all sections
+        document.getElementById('aluno-fields').style.display = 'none';
+        document.getElementById('colaborador-fields').style.display = 'none';
+        // Show the relevant section based on type
+        document.getElementById('colaborador-matricula').disabled = true;
+        document.getElementById('colaborador-departamento').disabled = true;
+        if (type === 'aluno') {
+            // Exibe campos de aluno e oculta os de colaborador
+            document.getElementById('aluno-fields').style.display = 'block';
+            document.getElementById('colaborador-fields').style.display = 'none';
+
+            // Habilita campos de aluno
+            document.getElementById('aluno-ra').disabled = false;
+            document.getElementById('aluno-curso').disabled = false;
+
+            // Desabilita campos de colaborador
+
+        } else if (type === 'colaborador') {
+            // Exibe campos de colaborador e oculta os de aluno
+            document.getElementById('aluno-fields').style.display = 'none';
+            document.getElementById('colaborador-fields').style.display = 'block';
+
+            // Habilita campos de colaborador
+            document.getElementById('colaborador-matricula').disabled = false;
+            document.getElementById('colaborador-departamento').disabled = false;
+
+            // Desabilita campos de aluno
+            document.getElementById('aluno-ra').disabled = true;
+            document.getElementById('aluno-curso').disabled = true;
+        } else {
+            // Caso não seja aluno nem colaborador, desabilite ambos
+            document.getElementById('aluno-fields').style.display = 'none';
+            document.getElementById('colaborador-fields').style.display = 'none';
+
+            // Desabilita campos de aluno
+            document.getElementById('aluno-ra').disabled = true;
+            document.getElementById('aluno-curso').disabled = true;
+
+            // Desabilita campos de colaborador
+            document.getElementById('colaborador-matricula').disabled = true;
+            document.getElementById('colaborador-departamento').disabled = true;
+        }
+
+        var buttons = document.querySelectorAll('.button-group button');
+        buttons.forEach(function (btn) {
+            btn.classList.remove('active');
+        });
+
+        // Add 'active' class to the clicked button
+        button.classList.add('active');
+    }
+</script>

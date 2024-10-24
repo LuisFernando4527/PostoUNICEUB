@@ -1,0 +1,75 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-content {
+    max-width: 700px;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: -webkit-fill-available;
+    padding: 32px;
+    border-radius: 20px;
+    gap: 24px;
+}
+
+    .form-content > form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+    }
+
+.ceub-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    
+}
+    .ceub-form-group > label, .cel-group label {
+        font-weight: 600;
+    }
+
+.btn-type-user {
+    font-size: 24px;
+    background-color: transparent;
+    border-bottom: 2px solid #a7a7a7;
+    color: black;
+    width: 100%;
+}
+
+.btn-type-user.active {
+    border-bottom: 4px solid purple;
+    font-weight: bold;
+}
+
+.button-group {
+    display: flex;
+    width: 100%;
+    gap: 18px;
+}
+
+.btn-type-user:hover {
+    background-color: #cab4d3;
+}
+
+.cel-group {
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
+    align-items: start;
+}
+.cel-group>div {
+    display: flex;
+    flex-direction: column;
+}
+.cel-group .ddd-group {
+        width: 20%;
+    }
+.cel-group .number-group {
+        width: 80%;
+}

@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PostoCeub.Data.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace PostoUNICEUB.Pages
 {
@@ -13,20 +16,14 @@ namespace PostoUNICEUB.Pages
             _context = context;
         }
 
-        public List <Usuario> ListaUsuarios { get; set; }
+        public List<Atendimento> ListaAtendimentos { get; set; }
+
         public void OnGet()
         {
-           
-           /* _context.Usuario.Add(new Usuario
-            {
-                nmUsuario = "Bruno Figueiredo",
-                edEmail = "bruno.figueired@sempreceub.com",
-                nuTelefone = "61 40028922"
-            });
-           */
-            _context.SaveChanges();
-
-             ListaUsuarios = _context.Usuario.ToList();
+            // Inclui os dados do Paciente ao buscar os Atendimentos
+            ListaAtendimentos = _context.Atendimento
+                .Include(a => a.Paciente)  // Inclui o paciente relacionado a cada atendimento
+                .ToList();
         }
     }
 }

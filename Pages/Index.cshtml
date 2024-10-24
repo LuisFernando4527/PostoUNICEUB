@@ -4,16 +4,38 @@
     ViewData["Title"] = "Home page";
 }
 
-@foreach (var usuario in Model.ListaUsuarios)
-{
-    <p>
-        @usuario.nmUsuario
-        <br>
-         @usuario.edEmail
-         <br>
-         @usuario.nuTelefone
-         <br>
-         @usuario.idUsuario
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/index.css"> 
+</head>
+<body>
+    <div class="care-container">
+        <input class="searchbar" type="text">
+        <h1>Atendimentos</h1>
 
-    </p>
+        @foreach (var atendimento in Model.ListaAtendimentos){
+{
+        <div class="care-card">
+            <div class="text-container">
+                <p>@atendimento.dtAtendimento</p>
+                <h3>@atendimento.Paciente?.nmPaciente</h3>
+                <p>@atendimento.idAtendimento</p>
+            </div>
+            <button>
+                Preencher
+            </button>
+        </div>
+        }
 }
+
+        <div class="buttons-container">
+            <button asp-area="" asp-page="/Privacy">Consultar Atendimentos</button>
+            <a class="ceub-button" asp-area="" asp-page="/NewPacient">Novo atendimento</a>
+        </div>
+    </div>
+
+</body>
+</html>

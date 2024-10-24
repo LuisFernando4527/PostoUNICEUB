@@ -2,17 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostoCeub.Data.Entities;
 
 #nullable disable
 
-namespace PostoUNICEUB.Data.Migrations
+namespace PostoUNICEUB.Migrations
 {
     [DbContext(typeof(PostoCeubDbContext))]
-    partial class PostoCeubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241011004950_NullFields")]
+    partial class NullFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +33,7 @@ namespace PostoUNICEUB.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idALuno"));
 
                     b.Property<string>("curso")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100) , Null;");
 
                     b.Property<int>("idPaciente")
                         .HasColumnType("int");
@@ -89,7 +91,7 @@ namespace PostoUNICEUB.Data.Migrations
 
                     b.Property<string>("departamento")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100) , Null;");
 
                     b.Property<int>("idPaciente")
                         .HasColumnType("int");
@@ -229,8 +231,11 @@ namespace PostoUNICEUB.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idPaciente"));
 
                     b.Property<string>("dtNascimento")
+                        .HasColumnType("varchar(50), Null;");
+
+                    b.Property<string>("nmPaciente")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("nuCPF")
                         .IsRequired()
@@ -238,11 +243,11 @@ namespace PostoUNICEUB.Data.Migrations
 
                     b.Property<string>("nuCelular")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("nuDDDCelular")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(3)");
 
                     b.HasKey("idPaciente");
 

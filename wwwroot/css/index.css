@@ -1,0 +1,45 @@
+.care-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+
+
+p, h3 {
+    margin: 0;
+}
+
+button:hover {
+    background-color: rgb(65, 0, 82);
+}
+
+.care-card {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ededed;
+    padding: 16px 20px;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.searchbar::after {
+    content: '';
+/*    background-image: url('/assets/search.svg');*/
+background-color: red;
+    width: 20px; /* Defina a largura desejada */
+    height: 20px; /* Defina a altura desejada */
+    display: inline-block; /* Isso permite que o pseudo-elemento seja renderizado */
+    background-size: contain; /* Ajusta o tamanho da imagem */
+    background-repeat: no-repeat; /* Evita a repetição da imagem */
+    margin-left: 8px; /* Adiciona um espaço ao lado do ícone, se necessário */
+}
+.searchbar {
+    display: flex; /* Ou outro layout que faça sentido */
+    align-items: center; /* Centraliza verticalmente o conteúdo */
+}

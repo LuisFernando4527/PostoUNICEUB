@@ -8,11 +8,11 @@ using PostoCeub.Data.Entities;
 
 #nullable disable
 
-namespace PostoUNICEUB.Data.Migrations
+namespace PostoUNICEUB.Migrations
 {
     [DbContext(typeof(PostoCeubDbContext))]
-    [Migration("20240927202122_TodasTabelas")]
-    partial class TodasTabelas
+    [Migration("20241004220022_AdicionarNovoCampoNoPaciente")]
+    partial class AdicionarNovoCampoNoPaciente
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,10 @@ namespace PostoUNICEUB.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("nmPaciente")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
                     b.Property<string>("nuCPF")
                         .IsRequired()
                         .HasColumnType("varchar(11)");
@@ -388,19 +392,19 @@ namespace PostoUNICEUB.Data.Migrations
                     b.HasOne("Enfermeiro", "Enfermeiro")
                         .WithMany()
                         .HasForeignKey("idEnfermeiro")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Medico", "Medico")
                         .WithMany()
                         .HasForeignKey("idMedico")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Paciente", "Paciente")
                         .WithMany()
                         .HasForeignKey("idPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Enfermeiro");

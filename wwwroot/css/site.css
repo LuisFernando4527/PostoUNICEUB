@@ -20,3 +20,28 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+input {
+    border: 2px solid #DB7DC7;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+    input:hover, input:active, input:focus {
+        outline: 1px solid rgb(65, 0, 82);
+    }
+
+button, a.ceub-button {
+    background-color: #43054E;
+    color: white;
+    padding: 4px 16px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    height: fit-content;
+    text-decoration: none;
+}
+.aluno-fields{
+    display: block;
+}
+
