@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MD382QsG8PRMHbOshUDzrLYPoEav8GjS5dsGgpYPrko=",
+  "Hash": "3Rd6x0vX7w25o8slVE/1/mCxRmieZhHwhN5x8zCeVg0=",
   "Source": "PostoUNICEUB",
   "BasePath": "_content/PostoUNICEUB",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\new-pacient.css"
+    },
+    {
+      "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\pacient.css",
+      "SourceId": "PostoUNICEUB",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\",
+      "BasePath": "_content/PostoUNICEUB",
+      "RelativePath": "css/pacient.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\pacient.css"
     },
     {
       "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\site.css",

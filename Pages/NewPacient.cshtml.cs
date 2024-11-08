@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PostoCeub.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace PostoUNICEUB.Pages
 {
@@ -40,8 +41,8 @@ namespace PostoUNICEUB.Pages
             // Limpa o ModelState para validação personalizada
             ModelState.Clear();
 
-            // Valida os campos do Paciente
             
+
 
             // Valida campos relevantes para Aluno
             if (pacienteType == "aluno")
@@ -68,6 +69,15 @@ namespace PostoUNICEUB.Pages
                     Console.WriteLine(error.ErrorMessage);
                 }
                 return Page(); // Retorna à página com as mensagens de erro
+            }
+
+
+            var existingPaciente = await _context.Paciente.FirstOrDefaultAsync(p => p.nuCPF == Paciente.nuCPF);
+
+            if (existingPaciente != null)
+            {
+                ModelState.AddModelError("Paciente.nuCPF", "CPF já cadastrado.");
+                return Page(); // Retorna à página com a mensagem de erro
             }
 
             // Salva o Paciente

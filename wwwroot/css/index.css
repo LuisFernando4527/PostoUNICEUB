@@ -3,9 +3,6 @@
     flex-direction: column;
     gap: 30px;
 }
-
-
-
 p, h3 {
     margin: 0;
 }
@@ -40,6 +37,7 @@ background-color: red;
     margin-left: 8px; /* Adiciona um espaço ao lado do ícone, se necessário */
 }
 .searchbar {
+    width: 100%;
     display: flex; /* Ou outro layout que faça sentido */
     align-items: center; /* Centraliza verticalmente o conteúdo */
 }

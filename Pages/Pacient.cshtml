@@ -1,0 +1,72 @@
+@page
+@model PostoUNICEUB.Pages.PacientModel
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/pacient.css">
+</head>
+<body>
+    <div class="pacient-container">
+        <h1>Pacientes</h1>
+
+        <div class="pacient-content">
+            <form method="get" class="search-pacient">
+                <input class="searchbar" type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Pesquisar por nome ou ID">
+                <button type="submit">Pesquisar</button>
+            </form>
+            @if (!string.IsNullOrEmpty(Model.SearchTerm))
+
+{
+    if (Model.ListaPacientes.Any())
+    {
+
+            <div class="pacients-container">
+                @foreach (var paciente in Model.ListaPacientes)
+            {
+                if (paciente is Aluno aluno)
+                {
+                <div class="pacient-card">
+                    <p>Aluno</p>
+                    <h2>@aluno.Paciente.nmPaciente</h2>
+                    <p>RA: @aluno.ra</p>
+                </div>
+                }
+                else if (paciente is Colaborador colaborador)
+                {
+                <div class="pacient-card">
+                    <p>Tipo: Colaborador</p>
+                    <h2>@colaborador.Paciente.nmPaciente</h2>
+                    <p>Matr�cula: @colaborador.matricula</p>
+                </div>
+                }
+                else if (paciente is Paciente externo)
+                {
+                <div class="pacient-card">
+                    <h2>@externo.nmPaciente</h2>
+                    <p>Tipo: Externo</p>
+                </div>
+                }
+            }
+
+            </div>
+            }else{
+            <h3>Paciente não encontrado</h3>
+            }
+            }
+
+            <button asp-page="/NewPacient">Cadastrar Paciente</button>
+
+        </div>
+           
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+

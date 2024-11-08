@@ -13,7 +13,9 @@
 </head>
 <body>
     <div class="care-container">
-        <input class="searchbar" type="text">
+        <form method="get">
+            <input class="searchbar" type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Pesquisar por nome, ID ou data">
+        </form>
         <h1>Atendimentos</h1>
 
         @foreach (var atendimento in Model.ListaAtendimentos){
@@ -33,7 +35,7 @@
 
         <div class="buttons-container">
             <button asp-area="" asp-page="/Privacy">Consultar Atendimentos</button>
-            <a class="ceub-button" asp-area="" asp-page="/NewPacient">Novo atendimento</a>
+            <a class="ceub-button" asp-area="" asp-page="/Pacient">Novo atendimento</a>
         </div>
     </div>
 
