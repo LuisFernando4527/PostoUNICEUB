@@ -1,0 +1,47 @@
+
+.diagnosis-container {
+    display: flex;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+    padding: 64px;
+    border-radius: 10px;
+    background: #f8f8f8;
+}
+
+    .diagnosis-container > form {
+        width: 100%;
+    }
+
+    .diagnosis-container h2 {
+        color: #43054E;
+    }
+    .diagnosis-container .form-container {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        width: 100%;
+    }
+
+    .diagnosis-container .presc-nu, .observations-dg {
+        width: 50%;
+    }
+    .diagnosis-container .prescricao-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .diagnosis-container label{
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .diagnosis-container.presc-nu {
+        gap: 18px;
+        display: flex;
+        flex-direction: column;
+    }
+    .diagnosis-container .form-actions {
+        float: inline-end;
+        margin-top: 16px;
+    }
+

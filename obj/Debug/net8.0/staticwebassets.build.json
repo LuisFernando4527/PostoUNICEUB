@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3Rd6x0vX7w25o8slVE/1/mCxRmieZhHwhN5x8zCeVg0=",
+  "Hash": "5D1CvgrS3T7BAnNJr8pXkUoZA8kU1Ue7SoFwHu3Y+l8=",
   "Source": "PostoUNICEUB",
   "BasePath": "_content/PostoUNICEUB",
   "Mode": "Default",
@@ -74,6 +74,25 @@
       "OriginalItemSpec": "wwwroot\\assets\\search.svg"
     },
     {
+      "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\diagnosis.css",
+      "SourceId": "PostoUNICEUB",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\",
+      "BasePath": "_content/PostoUNICEUB",
+      "RelativePath": "css/diagnosis.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\diagnosis.css"
+    },
+    {
       "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\index.css",
       "SourceId": "PostoUNICEUB",
       "SourceType": "Discovered",
@@ -129,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\pacient.css"
+    },
+    {
+      "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\record.css",
+      "SourceId": "PostoUNICEUB",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\",
+      "BasePath": "_content/PostoUNICEUB",
+      "RelativePath": "css/record.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\record.css"
     },
     {
       "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\site.css",

@@ -7,7 +7,7 @@ public class EvolucaoEnfermagem
     public int idEvolucaoEnfermagem { get; set; }
 
     [Column(TypeName = "varchar(50)")]
-    public string dataHora { get; set; }
+    public DateTime dataHora { get; set; }
 
     [Column(TypeName = "varchar(500)")]
     public string evolucao { get; set; }

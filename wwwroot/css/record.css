@@ -1,0 +1,17 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+}
+
+.form-group label{
+    font-size: 20px;
+    font-weight: bold;
+}

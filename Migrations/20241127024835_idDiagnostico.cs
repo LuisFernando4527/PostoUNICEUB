@@ -5,7 +5,7 @@
 namespace PostoUNICEUB.Migrations
 {
     /// <inheritdoc />
-    public partial class NullFields : Migration
+    public partial class idDiagnostico : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

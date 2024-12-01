@@ -11,8 +11,8 @@ using PostoCeub.Data.Entities;
 namespace PostoUNICEUB.Migrations
 {
     [DbContext(typeof(PostoCeubDbContext))]
-    [Migration("20241010234122_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241125022523_PrescEnf")]
+    partial class PrescEnf
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace PostoUNICEUB.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idALuno"));
 
                     b.Property<string>("curso")
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100) , Null;");
 
                     b.Property<int>("idPaciente")
                         .HasColumnType("int");
@@ -91,7 +91,7 @@ namespace PostoUNICEUB.Migrations
 
                     b.Property<string>("departamento")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100) , Null;");
 
                     b.Property<int>("idPaciente")
                         .HasColumnType("int");
@@ -251,6 +251,9 @@ namespace PostoUNICEUB.Migrations
 
                     b.HasKey("idPaciente");
 
+                    b.HasIndex("nuCPF")
+                        .IsUnique();
+
                     b.ToTable("Paciente");
                 });
 
@@ -266,7 +269,17 @@ namespace PostoUNICEUB.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(500)");
 
+                    b.Property<int>("idAtendimento")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idEnfermeiro")
+                        .HasColumnType("int");
+
                     b.HasKey("idPrescricaoEnfermagem");
+
+                    b.HasIndex("idAtendimento");
+
+                    b.HasIndex("idEnfermeiro");
 
                     b.ToTable("PrescricaoEnfermagem");
                 });
@@ -481,6 +494,25 @@ namespace PostoUNICEUB.Migrations
                         .IsRequired();
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("PrescricaoEnfermagem", b =>
+                {
+                    b.HasOne("Atendimento", "Atendimento")
+                        .WithMany()
+                        .HasForeignKey("idAtendimento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Enfermeiro", "Enfermeiro")
+                        .WithMany()
+                        .HasForeignKey("idEnfermeiro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Atendimento");
+
+                    b.Navigation("Enfermeiro");
                 });
 
             modelBuilder.Entity("PrescricaoMedica", b =>

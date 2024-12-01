@@ -27,6 +27,7 @@ public class Prontuario
     [ForeignKey("idAtendimento")]
     public virtual Atendimento Atendimento { get; set; }
 
+    public int? idMedico { get; set; } // Nullable int
     [ForeignKey(("idMedico"))]
     public virtual Medico Medico { get; set; }
 

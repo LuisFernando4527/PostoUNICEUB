@@ -28,45 +28,80 @@
             {
                 if (paciente is Aluno aluno)
                 {
-                <div class="pacient-card">
-                    <p>Aluno</p>
-                    <h2>@aluno.Paciente.nmPaciente</h2>
-                    <p>RA: @aluno.ra</p>
-                </div>
+                <form method="post" asp-page-handler="IniciarAtendimento">
+                    <div class="pacient-card">
+                        <div>
+                            <p>Aluno</p>
+                            <h2>@aluno.Paciente.nmPaciente</h2>
+                            <p>RA: @aluno.ra</p>
+                        </div>
+                        <input type="hidden" name="PacienteId" value="@aluno.Paciente.idPaciente" />
+                        <button type="submit">Iniciar</button>
+                    </div>
+                </form>
                 }
                 else if (paciente is Colaborador colaborador)
                 {
-                <div class="pacient-card">
-                    <p>Tipo: Colaborador</p>
-                    <h2>@colaborador.Paciente.nmPaciente</h2>
-                    <p>Matr�cula: @colaborador.matricula</p>
-                </div>
+                <form method="post" asp-page-handler="IniciarAtendimento">
+                    <div class="pacient-card">
+                        <div>
+                            <p>Tipo: Colaborador</p>
+                            <h2>@colaborador.Paciente.nmPaciente</h2>
+                            <p>Matrícula: @colaborador.matricula</p>
+                        </div>
+                        <input type="hidden" name="PacienteId" value="@colaborador.Paciente.idPaciente" />
+                        <button type="submit">Iniciar</button>
+                    </div>
+                </form>
                 }
                 else if (paciente is Paciente externo)
                 {
-                <div class="pacient-card">
-                    <h2>@externo.nmPaciente</h2>
-                    <p>Tipo: Externo</p>
-                </div>
+                <form method="post" asp-page-handler="IniciarAtendimento">
+                    <div class="pacient-card">
+                        <div>
+                            <h2>@externo.nmPaciente</h2>
+                            <p>Tipo: Externo</p>
+                        </div>
+                        <input type="hidden" name="PacienteId" value="@externo.idPaciente" />
+                        <button type="submit">Iniciar</button>
+                    </div>
+                </form>
                 }
-            }
-
+                }
             </div>
             }else{
             <h3>Paciente não encontrado</h3>
             }
             }
 
-            <button asp-page="/NewPacient">Cadastrar Paciente</button>
+            <a class="ceub-button" asp-page="/NewPacient">Cadastrar Paciente</a>
 
         </div>
-           
-        </div>
+
+    </div>
     </div>
 </body>
 </html>
-
+@if (Request.Query.ContainsKey("success"))
+{
+<div id="success-message" class="alert-success">
+    Paciente cadastrado com sucesso!
+</div>
+}
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const message = document.getElementById("success-message");
+            if (message) {
+                message.style.display = "block";
+                setTimeout(() => {
+                    message.style.display = "none";
+                }, 4000); // Oculta após 4 segundos
+            }
+        });
+    </script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
 

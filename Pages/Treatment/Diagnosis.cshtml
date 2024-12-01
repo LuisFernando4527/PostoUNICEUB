@@ -1,0 +1,50 @@
+@page
+@model PostoUNICEUB.Pages.Treatment.DiagnosisModel
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/diagnosis.css">
+</head>
+<body>
+       <h1 style="color:#43054E; text-align: center; margin-bottom: 16px">Diagnóstico do Atendimento</h1>
+        <div class="diagnosis-container">
+
+        <!-- Exibindo a informação do atendimento e paciente -->
+
+        <form method="post">
+            <div class="form-container">
+                <div class="observations-dg">
+                    <h2><strong>Paciente:</strong> @Model.Atendimento.Paciente.nmPaciente</h2>
+                    @*<h3>Selecione os Diagnósticos</h3>*@
+                    <div class="diagnostics-list">
+                        @foreach (var diagnostico in Model.Diagnosticos)
+                    {
+                        <div>
+                            <input type="checkbox" name="diagnosticoIds" value="@diagnostico.idDiagnostico" />
+                            <label>@diagnostico.diagnostico</label>
+                        </div>
+                    }
+                    </div>
+                </div>
+                
+                <div class="presc-nu">
+                    @for (int i = 0; i < Model.PrescricoesPadrao.Count; i++)
+        {
+                    <div class="prescricao-item">
+                        <label for="anotacao-@i">@Model.PrescricoesPadrao[i]</label>
+                        <textarea id="anotacao-@i" name="anotacoes[@i]" rows="3"></textarea>
+                    </div>
+        }
+                </div>
+            </div>
+                <div class="form-actions">
+                    <button type="submit" class="ceub-button">Salvar</button>
+                </div>
+        </form>
+    </div>
+</body>
+</html>

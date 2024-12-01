@@ -23,10 +23,7 @@ namespace PostoUNICEUB.Pages
         [BindProperty]
         public Colaborador Colaborador { get; set; }
 
-        public void OnGet()
-        {
-            // Você pode inicializar aqui se necessário
-        }
+        
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -99,8 +96,7 @@ namespace PostoUNICEUB.Pages
             // Salva as alterações no banco de dados
             await _context.SaveChangesAsync();
 
-            // Redireciona para uma página de confirmação ou listagem, por exemplo
-            return RedirectToPage("/index"); // Altere para o caminho desejado
+            return RedirectToPage("/Pacient", new { success = true });
         }
 
 

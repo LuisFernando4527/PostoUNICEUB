@@ -6,12 +6,13 @@ public class Atendimento
     [Key]
     public int idAtendimento { get; set; }
 
-    [Column(TypeName = "varchar(20)")]
-    public string dtAtendimento { get; set; }
+
+    [Column(TypeName = "datetime2")]
+    public DateTime dtAtendimento { get; set; }
 
     public int idPaciente { get; set; }
-    public int idEnfermeiro { get; set; }
-    public int idMedico { get; set; }
+    public int? idEnfermeiro { get; set; }
+    public int? idMedico { get; set; }
 
     [ForeignKey("idPaciente")]
     public virtual Paciente Paciente { get; set; }

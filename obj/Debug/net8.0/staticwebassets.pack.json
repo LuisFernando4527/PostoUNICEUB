@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\assets\\search.svg"
     },
     {
+      "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\diagnosis.css",
+      "PackagePath": "staticwebassets\\css\\diagnosis.css"
+    },
+    {
       "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\index.css",
       "PackagePath": "staticwebassets\\css\\index.css"
     },
@@ -19,6 +23,10 @@
     {
       "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\pacient.css",
       "PackagePath": "staticwebassets\\css\\pacient.css"
+    },
+    {
+      "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\record.css",
+      "PackagePath": "staticwebassets\\css\\record.css"
     },
     {
       "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\site.css",

@@ -21,6 +21,7 @@ namespace PostoUNICEUB.Pages
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
+         // Pesquisa por Pacientes
         public void OnGet()
         {
             if (!string.IsNullOrEmpty(SearchTerm))
@@ -49,5 +50,34 @@ namespace PostoUNICEUB.Pages
             ListaPacientes.AddRange(externos);
             }
         }
+
+        [BindProperty]
+        public int PacienteId { get; set; } // ID do paciente selecionado para iniciar atendimento.
+
+        // Iniciar atendimento com paciente selecionado
+        public IActionResult OnPostIniciarAtendimento()
+        {
+            if (PacienteId > 0)
+            {
+                // Criar um novo atendimento
+                var atendimento = new Atendimento
+                {
+                    idPaciente = PacienteId,
+                    dtAtendimento = DateTime.Now // Data e hora do atendimento.
+                };
+
+                // Adicionar no banco de dados
+                _context.Atendimento.Add(atendimento);
+                _context.SaveChanges();
+
+                // Redirecionar para a página de diagnóstico com o ID do Atendimento
+                return RedirectToPage("/Treatment/Diagnosis", new { idAtendimento = atendimento.idAtendimento });
+            }
+
+            // Se algo der errado, exibir mensagem de erro.
+            TempData["ErrorMessage"] = "Erro ao iniciar atendimento.";
+            return RedirectToPage("/Pacient");
+        }
+
     }
 }

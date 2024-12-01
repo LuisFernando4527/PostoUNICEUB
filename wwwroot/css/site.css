@@ -21,13 +21,13 @@ body {
   margin-bottom: 60px;
 }
 
-input {
+input,textarea {
     border: 2px solid #DB7DC7;
     border-radius: 4px;
     padding: 4px 8px;
 }
 
-    input:hover, input:active, input:focus {
+    input:hover, input:active, input:focus, textarea:hover, textarea:active, textarea:focus {
         outline: 1px solid rgb(65, 0, 82);
     }
 
@@ -44,4 +44,8 @@ button, a.ceub-button {
 .aluno-fields{
     display: block;
 }
+
+
+
+
 

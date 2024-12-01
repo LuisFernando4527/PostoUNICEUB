@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostoCeub.Data.Entities;
 
@@ -11,9 +12,11 @@ using PostoCeub.Data.Entities;
 namespace PostoUNICEUB.Migrations
 {
     [DbContext(typeof(PostoCeubDbContext))]
-    partial class PostoCeubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241125023942_OptionalFieldsAtendimento")]
+    partial class OptionalFieldsAtendimento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,7 +272,7 @@ namespace PostoUNICEUB.Migrations
                     b.Property<int>("idAtendimento")
                         .HasColumnType("int");
 
-                    b.Property<int?>("idEnfermeiro")
+                    b.Property<int>("idEnfermeiro")
                         .HasColumnType("int");
 
                     b.HasKey("idPrescricaoEnfermagem");
@@ -343,7 +346,7 @@ namespace PostoUNICEUB.Migrations
                     b.Property<int>("idAtendimento")
                         .HasColumnType("int");
 
-                    b.Property<int?>("idMedico")
+                    b.Property<int>("idMedico")
                         .HasColumnType("int");
 
                     b.Property<string>("qp")
@@ -501,7 +504,9 @@ namespace PostoUNICEUB.Migrations
 
                     b.HasOne("Enfermeiro", "Enfermeiro")
                         .WithMany()
-                        .HasForeignKey("idEnfermeiro");
+                        .HasForeignKey("idEnfermeiro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Atendimento");
 
@@ -537,7 +542,9 @@ namespace PostoUNICEUB.Migrations
 
                     b.HasOne("Medico", "Medico")
                         .WithMany()
-                        .HasForeignKey("idMedico");
+                        .HasForeignKey("idMedico")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Atendimento");
 

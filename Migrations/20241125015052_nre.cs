@@ -5,7 +5,7 @@
 namespace PostoUNICEUB.Migrations
 {
     /// <inheritdoc />
-    public partial class AdicionarNovoCampoNoPaciente : Migration
+    public partial class nre : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,27 +30,14 @@ namespace PostoUNICEUB.Migrations
                     idPaciente = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nuCPF = table.Column<string>(type: "varchar(11)", nullable: false),
-                    dtNascimento = table.Column<string>(type: "varchar(50)", nullable: false),
-                    nuCelular = table.Column<string>(type: "varchar(50)", nullable: false),
-                    nuDDDCelular = table.Column<string>(type: "varchar(50)", nullable: false),
+                    dtNascimento = table.Column<string>(type: "varchar(50)", nullable: true),
+                    nuCelular = table.Column<string>(type: "varchar(10)", nullable: false),
+                    nuDDDCelular = table.Column<string>(type: "varchar(3)", nullable: false),
                     nmPaciente = table.Column<string>(type: "varchar(100)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Paciente", x => x.idPaciente);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PrescricaoEnfermagem",
-                columns: table => new
-                {
-                    idPrescricaoEnfermagem = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    anotacao = table.Column<string>(type: "varchar(500)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PrescricaoEnfermagem", x => x.idPrescricaoEnfermagem);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,7 +62,7 @@ namespace PostoUNICEUB.Migrations
                     idALuno = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ra = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    curso = table.Column<string>(type: "varchar(100)", nullable: false),
+                    curso = table.Column<string>(type: "varchar(100)", nullable: true),
                     idPaciente = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -236,6 +223,33 @@ namespace PostoUNICEUB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PrescricaoEnfermagem",
+                columns: table => new
+                {
+                    idPrescricaoEnfermagem = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    anotacao = table.Column<string>(type: "varchar(500)", nullable: false),
+                    idAtendimento = table.Column<int>(type: "int", nullable: false),
+                    idEnfermeiro = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrescricaoEnfermagem", x => x.idPrescricaoEnfermagem);
+                    table.ForeignKey(
+                        name: "FK_PrescricaoEnfermagem_Atendimento_idAtendimento",
+                        column: x => x.idAtendimento,
+                        principalTable: "Atendimento",
+                        principalColumn: "idAtendimento",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PrescricaoEnfermagem_Medico_idEnfermeiro",
+                        column: x => x.idEnfermeiro,
+                        principalTable: "Medico",
+                        principalColumn: "idMedico",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PrescricaoMedica",
                 columns: table => new
                 {
@@ -349,6 +363,22 @@ namespace PostoUNICEUB.Migrations
                 name: "IX_Medico_idUsuario",
                 table: "Medico",
                 column: "idUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Paciente_nuCPF",
+                table: "Paciente",
+                column: "nuCPF",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrescricaoEnfermagem_idAtendimento",
+                table: "PrescricaoEnfermagem",
+                column: "idAtendimento");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrescricaoEnfermagem_idEnfermeiro",
+                table: "PrescricaoEnfermagem",
+                column: "idEnfermeiro");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrescricaoMedica_idAtendimento",

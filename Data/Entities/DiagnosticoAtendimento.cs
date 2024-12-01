@@ -9,6 +9,7 @@ public class DiagnosticoAtendimento
 
     [ForeignKey("idDiagnostico")]
     public virtual Diagnostico Diagnostico {  get; set; }
+    public int idDiagnostico { get; set; }
 
     [ForeignKey("idAtendimento")]
     public virtual Atendimento Atendimento { get; set; }
