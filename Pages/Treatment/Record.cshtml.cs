@@ -32,17 +32,32 @@ namespace PostoUNICEUB.Pages.Treatment
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
+            ModelState.Remove("Prontuario.Atendimento");
+            ModelState.Remove("Prontuario.Medico");
             // Associa o idAtendimento ao prontuário
             Prontuario.Atendimento = await _context.Atendimento.FindAsync(idAtendimento);
 
             if (Prontuario.Atendimento == null)
             {
                 ModelState.AddModelError("", "Atendimento não encontrado.");
+                return Page();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("Deu ERRO");
+
+                foreach (var entry in ModelState)
+                {
+                    var key = entry.Key;
+                    var errors = entry.Value.Errors;
+
+                    foreach (var error in errors)
+                    {
+                        Console.WriteLine($"Erro em '{key}': {error.ErrorMessage}");
+                    }
+                }
+
                 return Page();
             }
 
