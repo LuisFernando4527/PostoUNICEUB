@@ -51,11 +51,6 @@ namespace PostoUNICEUB.Pages.Treatment
                 {
                     var key = entry.Key;
                     var errors = entry.Value.Errors;
-
-                    foreach (var error in errors)
-                    {
-                        Console.WriteLine($"Erro em '{key}': {error.ErrorMessage}");
-                    }
                 }
 
                 return Page();
@@ -66,7 +61,8 @@ namespace PostoUNICEUB.Pages.Treatment
             await _context.SaveChangesAsync();
 
             // Redireciona para a página de pacientes com uma mensagem de sucesso
-            return RedirectToPage("/Pacient", new { success = true });
+            return RedirectToPage("/Treatment/MedicalPrescription", new { idAtendimento = idAtendimento });
+
         }
     }
 

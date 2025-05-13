@@ -16,5 +16,7 @@ public class PrescricaoMedica
     public virtual Atendimento Atendimento { get; set; }
     [ForeignKey("idMedico")]
     public virtual Medico Medico { get; set; }
-    
+    // TODO:
+    public int? idMedico { get; set; }
+
 }

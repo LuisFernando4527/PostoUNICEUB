@@ -1,0 +1,76 @@
+@page
+@model PostoUNICEUB.Pages.Treatment.MedicalPrescriptionModel
+@{
+    ViewData["Title"] = "Prescrição Médica";
+}
+
+<h2>Prescrição Médica</h2>
+
+<p><strong>Paciente:</strong> @Model.NomePaciente</p>
+
+<form method="post">
+    <div id="prescricoes-container">
+        @for (int i = 0; i < Model.Prescricoes.Count; i++)
+        {
+        <div class="prescricao-item">
+            <label>Prescrição:</label>
+            <input type="text" name="Prescricoes[@i].Prescricao" class="form-control" required />
+
+            <label>Horário da Prescrição:</label>
+            <input type="text" name="Prescricoes[@i].HorarioPrescricao" class="form-control" required />
+
+            <button type="button" onclick="removerPrescricao(this)">Remover</button>
+
+            <hr />
+        </div>
+        }
+    </div>
+
+    <button type="button" onclick="adicionarPrescricao()">Adicionar nova prescrição</button>
+    <br /><br />
+    <button type="submit">Salvar Prescrições</button>
+</form>
+
+@section Scripts {
+    <script>
+        let count = @Model.Prescricoes.Count;
+
+        function adicionarPrescricao() {
+            const container = document.getElementById("prescricoes-container");
+
+            const div = document.createElement("div");
+            div.className = "prescricao-item";
+
+            div.innerHTML = `
+                <label>Prescrição:</label>
+                <input type="text" name="Prescricoes[${count}].Prescricao" class="form-control" required />
+
+                <label>Horário da Prescrição:</label>
+                <input type="time" name="Prescricoes[${count}].HorarioPrescricao" class="form-control" required />
+
+                <button type="button" onclick="removerPrescricao(this)">Remover</button>
+
+                <hr />
+            `;
+
+            container.appendChild(div);
+            count++;
+        }
+
+        function removerPrescricao(button) {
+            const item = button.closest('.prescricao-item');
+            item.remove();
+            reindexarCampos();
+        }
+
+        function reindexarCampos() {
+            const items = document.querySelectorAll('.prescricao-item');
+            items.forEach((item, index) => {
+                const inputs = item.querySelectorAll('input');
+                inputs[0].setAttribute('name', `Prescricoes[${index}].Prescricao`);
+                inputs[1].setAttribute('name', `Prescricoes[${index}].HorarioPrescricao`);
+            });
+            count = items.length;
+        }
+    </script>
+}
