@@ -21,14 +21,16 @@ body {
   margin-bottom: 60px;
 }
 
-input,textarea {
+input,textarea , .form-control{
     border: 2px solid #DB7DC7;
     border-radius: 4px;
     padding: 4px 8px;
 }
 
-    input:hover, input:active, input:focus, textarea:hover, textarea:active, textarea:focus {
+    input:hover, input:active, input:focus, textarea:hover, textarea:active, textarea:focus, .form-check-input:focus, .form-control:active, .form-control:hover {
         outline: 1px solid rgb(65, 0, 82);
+        border-color: transparent;
+        box-shadow: none !important;
     }
 
 button, a.ceub-button {
@@ -41,11 +43,67 @@ button, a.ceub-button {
     height: fit-content;
     text-decoration: none;
 }
+
+    button:hover, a.ceub-button:hover {
+        background-color: #6a077c;
+    }
 .aluno-fields{
     display: block;
 }
 
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px; 
+}
 
+.prescricao-item {
+    background-color: #EBEBEB;
+    padding: 28px;
+    border-radius: 8px;
+    position: relative;
+    margin-block-end: 16px;
+}
 
+.remove-btn {
+    background-image: url('/assets/trash.png');
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent ;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.remove-btn:hover {
+    background-color: white;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-prescription-container{
+    display: flex;
+    gap: 8px;
+}
+
+.treatment-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 75vh;
+}
+
+    .treatment-container main{
+        flex: 1;
+    }
+
+    .treatment-container footer {
+        border-top: 1px solid #ccc;
+        padding-block-start: 16px;
+    }
 
 

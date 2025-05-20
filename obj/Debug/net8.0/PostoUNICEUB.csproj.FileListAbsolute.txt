@@ -272,3 +272,8 @@ C:\Users\lucas\projects\PostoUNICEUB\obj\Debug\net8.0\refint\PostoUNICEUB.dll
 C:\Users\lucas\projects\PostoUNICEUB\obj\Debug\net8.0\PostoUNICEUB.pdb
 C:\Users\lucas\projects\PostoUNICEUB\obj\Debug\net8.0\PostoUNICEUB.genruntimeconfig.cache
 C:\Users\lucas\projects\PostoUNICEUB\obj\Debug\net8.0\ref\PostoUNICEUB.dll
+C:\Users\lucas\projects\PostoUNICEUB\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\lucas\projects\PostoUNICEUB\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\lucas\projects\PostoUNICEUB\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\lucas\projects\PostoUNICEUB\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\lucas\projects\PostoUNICEUB\obj\Debug\net8.0\PostoUNICEUB.MvcApplicationPartsAssemblyInfo.cs

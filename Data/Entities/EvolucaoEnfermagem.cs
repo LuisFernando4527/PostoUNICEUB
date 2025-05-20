@@ -14,8 +14,10 @@ public class EvolucaoEnfermagem
 
     [ForeignKey("idAtendimento")]
     public virtual Atendimento Atendimento { get; set; }
-    
 
+
+    // TODO
+    public int? idEnfermeiro { get; set; } // Nullable int
     [ForeignKey("idEnfermeiro")]
     public virtual Enfermeiro Enfermeiro { get; set; }
 

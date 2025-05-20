@@ -10,6 +10,9 @@ namespace PostoUNICEUB.Pages.Treatment
     public class RecordModel : PageModel
     {
 
+        [BindProperty(SupportsGet = true)]
+        public bool IsReadOnly { get; set; }
+
         // Pegando ID paciente
         [BindProperty(SupportsGet = true)]
         public int idAtendimento { get; set; }
@@ -25,10 +28,25 @@ namespace PostoUNICEUB.Pages.Treatment
         [BindProperty]
         public Prontuario Prontuario { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            
+            if (IsReadOnly)
+            {
+                // Modo de visualização - carrega prontuário existente
+                Prontuario = await _context.Prontuario
+                    .Include(p => p.Atendimento)
+                    .FirstOrDefaultAsync(p => p.Atendimento.idAtendimento == idAtendimento);
+            }
+            else
+            {
+                // Modo de criação - inicializa com atendimento (sem carregar Prontuario do banco)
+                Prontuario = new Prontuario();
+            }
+
+            return Page();
         }
+
+
 
         public async Task<IActionResult> OnPostAsync()
         {

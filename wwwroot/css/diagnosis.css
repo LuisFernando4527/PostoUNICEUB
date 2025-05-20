@@ -24,7 +24,7 @@
     .diagnosis-container .presc-nu, .observations-dg {
         width: 50%;
     }
-    .diagnosis-container .prescricao-item {
+    .diagnosis-container .diagnostico-item {
         display: flex;
         flex-direction: column;
         gap: 4px;

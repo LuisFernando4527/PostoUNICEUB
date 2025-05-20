@@ -21,6 +21,9 @@ namespace PostoUNICEUB.Pages.Treatment
         public int idAtendimento { get; set; }
 
         public string NomePaciente { get; set; }
+        
+        [BindProperty(SupportsGet = true)]
+        public bool IsReadOnly { get; set; }
 
         [BindProperty]
         public List<PrescricaoInputModel> Prescricoes { get; set; } = new();
@@ -42,13 +45,28 @@ namespace PostoUNICEUB.Pages.Treatment
 
             NomePaciente = atendimento.Paciente.nmPaciente;
 
-            // Adiciona um item inicial
-            Prescricoes.Add(new PrescricaoInputModel());
+            if (IsReadOnly)
+            {
+                Prescricoes = await _context.PrescricaoMedica
+                    .Where(p => p.Atendimento.idAtendimento == idAtendimento)
+                    .Select(p => new PrescricaoInputModel
+                    {
+                        Prescricao = p.prescricao,
+                        HorarioPrescricao = p.horarioPrescricao
+                    })
+                    .ToListAsync();
+            }
+            else
+            {
+                // Adiciona um item vazio para inserção
+                Prescricoes.Add(new PrescricaoInputModel());
+            }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+
+        public async Task<IActionResult> OnPostSalvarAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
@@ -71,7 +89,12 @@ namespace PostoUNICEUB.Pages.Treatment
 
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Treatment/MedicalPrescription", new { idAtendimento });
+            return RedirectToPage("/Treatment/Progress", new { idAtendimento });
         }
+        public IActionResult OnPostPularEtapa()
+        {
+            return RedirectToPage("/Treatment/Progress", new { idAtendimento});
+        }
+
     }
 }

@@ -1,0 +1,123 @@
+@page
+@model ProgressModel
+@{
+    ViewData["Title"] = "Evolução de Enfermagem";
+}
+
+<h2>Evolução de Enfermagem</h2>
+
+<form method="post">
+    <div class="treatment-container">
+        <main>
+            <input type="hidden" asp-for="idAtendimento" />
+
+            <p><strong>Paciente:</strong> @Model.NomePaciente</p>
+            <p><strong>Número atendimento:</strong> @Model.idAtendimento</p>
+            <div id="evolucoes-container">
+                @if(Model.IsReadOnly && Model.Evolucoes.Count == 0){
+                <div class="prescricao-item">
+                    <h2 style="justify-self:center">Não foram cadastradas evoluções para esse atendimento</h2>
+                </div>
+}
+                @for (int i = 0; i < Model.Evolucoes.Count; i++)
+                {
+                <div class="prescricao-item evolucao-form">
+                    @if (!Model.IsReadOnly)
+                        {
+                    <button type="button" class="remove-btn" onclick="removerEvolucao(this)"></button>
+                        }
+
+                    <label>Data/Hora</label>
+                    <input type="datetime-local"
+                           name="Evolucoes[@i].DataHora"
+                           value="@Model.Evolucoes[i].DataHora.ToString("yyyy-MM-ddTHH:mm")"
+                           class="form-control"
+                           @(Model.IsReadOnly ? "disabled" : "") />
+
+                    <label>Evolução</label>
+                    <textarea name="Evolucoes[@i].Evolucao"
+                              class="form-control"
+                              @(Model.IsReadOnly ? "disabled" : "")>@Model.Evolucoes[i].Evolucao</textarea>
+                </div>
+                }
+            </div>
+
+            @if (!Model.IsReadOnly)
+            {
+            <button type="button" onclick="addEvolucao()" class="ceub-button mb-4">Adicionar Evolução</button>
+            }
+        </main>
+
+        <footer>
+            <div class="btn-container">
+                @if (!Model.IsReadOnly)
+                {
+                <a class="ceub-button" asp-page="/Treatment/MedicalPrescription" asp-route-idAtendimento="@Model.idAtendimento">Voltar</a>
+                <div class="btn-prescription-container">
+                    <button type="submit" class="ceub-button">Salvar</button>
+                </div>
+                }
+                else
+                {
+                <a class="ceub-button" asp-page="/Treatment/MedicalPrescription" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Voltar</a>
+                <a class="ceub-button" asp-page="/Index">Seguir</a>
+                }
+            </div>
+        </footer>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        let index = @Model.Evolucoes.Count;
+        const isReadOnly = @(Model.IsReadOnly.ToString().ToLower());
+
+        function addEvolucao() {
+            const container = document.getElementById("evolucoes-container");
+
+            const div = document.createElement("div");
+            div.className = "prescricao-item evolucao-form";
+
+            let html = "";
+
+            if (!isReadOnly) {
+                html += `<button type="button" class="remove-btn" onclick="removerEvolucao(this)"></button>`;
+            }
+
+            html += `
+                <label>Data/Hora</label>
+                <input type="datetime-local"
+                       name="Evolucoes[${index}].DataHora"
+                       class="form-control"
+                       ${isReadOnly ? "disabled" : ""} />
+
+                <label>Evolução</label>
+                <textarea name="Evolucoes[${index}].Evolucao"
+                          class="form-control"
+                          ${isReadOnly ? "disabled" : ""}></textarea>
+            `;
+
+            div.innerHTML = html;
+            container.appendChild(div);
+            index++;
+        }
+
+        function removerEvolucao(button) {
+            const item = button.closest('.evolucao-form');
+            item.remove();
+            reindexarCampos();
+        }
+
+        function reindexarCampos() {
+            const items = document.querySelectorAll('.evolucao-form');
+            items.forEach((item, i) => {
+                const dataInput = item.querySelector('input[type="datetime-local"]');
+                const evolucaoTextarea = item.querySelector('textarea');
+
+                dataInput.setAttribute('name', `Evolucoes[${i}].DataHora`);
+                evolucaoTextarea.setAttribute('name', `Evolucoes[${i}].Evolucao`);
+            });
+            index = items.length;
+        }
+    </script>
+}

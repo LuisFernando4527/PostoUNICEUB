@@ -9,9 +9,34 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/index.css"> 
+    <link rel="stylesheet" href="~/css/index.css">
 </head>
 <body>
+    @if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+
+
+}
+
+    @if (Model.IsMedico)
+{
+    <p>Você está logado como <strong>Médico</strong>.</p>
+}
+else if (Model.IsEnfermeiro)
+{
+    <p>Você está logado como <strong>Enfermeiro</strong>.</p>
+}
+else if (Model.IsAdmin)
+{
+    <p>Você está logado como <strong>Administrador</strong>.</p>
+}
+else
+{
+    <p>Você não tem um papel definido.</p>
+}
     <div class="care-container">
         <form method="get">
             <input class="searchbar" type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Pesquisar por nome, ID ou data">
@@ -26,9 +51,10 @@
                 <h3>@atendimento.Paciente?.nmPaciente</h3>
                 <p>@atendimento.idAtendimento</p>
             </div>
-            <button>
-                Preencher
-            </button>
+            <a class="ceub-button" asp-page="/Treatment/Diagnosis" asp-route-idAtendimento="@atendimento.idAtendimento" asp-route-IsReadOnly="true">
+                Visualizar
+            </a>
+
         </div>
         }
 }
@@ -41,3 +67,12 @@
 
 </body>
 </html>
+
+@section Scripts {
+    <script>
+        setTimeout(() => {
+            const alert = document.querySelector('.alert-success');
+            if (alert) alert.style.display = 'none';
+        }, 4000);
+    </script>
+}

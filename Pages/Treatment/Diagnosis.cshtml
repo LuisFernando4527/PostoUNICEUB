@@ -1,5 +1,9 @@
 @page
 @model PostoUNICEUB.Pages.Treatment.DiagnosisModel
+@{
+    ViewData["Title"] = "Diagnóstico do Atendimento";
+    bool isReadonly = Model.readonlyMode;
+}
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -10,40 +14,62 @@
     <link rel="stylesheet" href="~/css/diagnosis.css">
 </head>
 <body>
-       <h1 style="color:#43054E; text-align: center; margin-bottom: 16px">Diagnóstico do Atendimento</h1>
-        <div class="diagnosis-container">
+    <h1 style="color:#43054E; text-align: center; margin-bottom: 16px">Diagnóstico do Atendimento</h1>
 
-        <!-- Exibindo a informação do atendimento e paciente -->
+    <strong>Paciente:</strong> @Model.Atendimento?.Paciente?.nmPaciente</p>
+    <p><strong>Número atendimento:</strong> @Model.idAtendimento</p>
+    <div class="diagnosis-container">
 
         <form method="post">
             <div class="form-container">
                 <div class="observations-dg">
-                    <h2><strong>Paciente:</strong> @Model.Atendimento.Paciente.nmPaciente</h2>
-                    @*<h3>Selecione os Diagnósticos</h3>*@
+
                     <div class="diagnostics-list">
                         @foreach (var diagnostico in Model.Diagnosticos)
-                    {
+                        {
+                            var isChecked = Model.DiagnosticosMarcados.Contains(diagnostico.idDiagnostico);
                         <div>
-                            <input type="checkbox" name="diagnosticoIds" value="@diagnostico.idDiagnostico" />
+                            <input type="checkbox"
+                                   name="SelectedDiagnosticos"
+                                   value="@diagnostico.idDiagnostico"
+                                   @(isChecked ? "checked" : "")
+                                   @(Model.IsReadOnly ? "disabled" : "") />
                             <label>@diagnostico.diagnostico</label>
                         </div>
-                    }
+                        }
                     </div>
                 </div>
-                
+
                 <div class="presc-nu">
                     @for (int i = 0; i < Model.PrescricoesPadrao.Count; i++)
-        {
-                    <div class="prescricao-item">
+{
+                    var textoPreenchido = i < Model.PrescricoesExistentes.Count
+                        ? Model.PrescricoesExistentes[i].anotacao
+                        : "";
+
+                    <div class="diagnostico-item">
                         <label for="anotacao-@i">@Model.PrescricoesPadrao[i]</label>
-                        <textarea id="anotacao-@i" name="anotacoes[@i]" rows="3"></textarea>
+                        <textarea id="anotacao-@i"
+                                  name="anotacoes[@i]"
+                                  rows="3"
+                                  @(Model.IsReadOnly ? "readonly" : "")>@textoPreenchido</textarea>
                     </div>
-        }
+}
+
                 </div>
             </div>
-                <div class="form-actions">
-                    <button type="submit" class="ceub-button">Salvar</button>
-                </div>
+
+            <div class="form-actions">
+                @if (!Model.IsReadOnly )
+            {
+                <button type="submit" class="ceub-button">Salvar</button>
+            }else{
+                <a class="ceub-button" asp-page="/Treatment/Record" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Seguir</a>
+
+            }
+
+            </div>
+
         </form>
     </div>
 </body>

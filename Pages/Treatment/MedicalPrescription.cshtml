@@ -4,32 +4,69 @@
     ViewData["Title"] = "Prescrição Médica";
 }
 
-<h2>Prescrição Médica</h2>
+        <form method="post">
+<div class="treatment-container">
 
-<p><strong>Paciente:</strong> @Model.NomePaciente</p>
+    <main>
 
-<form method="post">
-    <div id="prescricoes-container">
-        @for (int i = 0; i < Model.Prescricoes.Count; i++)
+
+        <h2>Prescrição Médica</h2>
+
+        <p><strong>Paciente:</strong> @Model.NomePaciente</p>
+        <p><strong>Número atendimento:</strong> @Model.idAtendimento</p>
+
+
+            <input type="hidden" name="idAtendimento" value="@Model.idAtendimento" />
+
+
+
+            <div id="prescricoes-container">
+                @if(Model.IsReadOnly && Model.Prescricoes.Count == 0){
+                <div class="prescricao-item">
+                    <h2 style="justify-self:center">Não foram cadastradas prescrições médicas para esse atendimento</h2>
+                </div>
+            }
+
+                @for (int i = 0; i < Model.Prescricoes.Count; i++)
+{
+                <div class="prescricao-item">
+                    @if (!Model.IsReadOnly)
         {
-        <div class="prescricao-item">
-            <label>Prescrição:</label>
-            <input type="text" name="Prescricoes[@i].Prescricao" class="form-control" required />
-
-            <label>Horário da Prescrição:</label>
-            <input type="text" name="Prescricoes[@i].HorarioPrescricao" class="form-control" required />
-
-            <button type="button" onclick="removerPrescricao(this)">Remover</button>
-
-            <hr />
-        </div>
+                    <button type="button" onclick="removerPrescricao(this)" class="remove-btn"></button>
         }
-    </div>
+                    <label class="fw-bold">Prescrição:</label>
+                    <input type="text" name="Prescricoes[@i].Prescricao" class="form-control mb-2" value="@Model.Prescricoes[i].Prescricao" @(Model.IsReadOnly ? "readonly" : "") />
 
-    <button type="button" onclick="adicionarPrescricao()">Adicionar nova prescrição</button>
-    <br /><br />
-    <button type="submit">Salvar Prescrições</button>
-</form>
+                    <label class="fw-bold">Horário da Prescrição:</label>
+                    <input type="text" name="Prescricoes[@i].HorarioPrescricao" class="form-control" value="@Model.Prescricoes[i].HorarioPrescricao" @(Model.IsReadOnly ? "readonly" : "") />
+                </div>
+}
+
+            </div>
+
+    </main>
+    <footer>
+
+
+
+        <div class="btn-container">
+            @if (!Model.IsReadOnly)
+        {
+            <button type="button" onclick="adicionarPrescricao()">Nova prescrição</button>
+            <div class="btn-prescription-container">
+                <button type="submit" asp-page-handler="PularEtapa" class="btn-secondary">Avançar sem prescrição</button>
+                <button type="submit" asp-page-handler="Salvar">Salvar Prescrições</button>
+            </div>
+        }else{
+
+            <a class="ceub-button" asp-page="/Treatment/Record" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Voltar</a>
+            <a class="ceub-button" asp-page="/Treatment/Progress" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Seguir</a>
+         }
+
+        </div>
+    </footer>
+</div>
+    </form>
 
 @section Scripts {
     <script>
@@ -43,14 +80,11 @@
 
             div.innerHTML = `
                 <label>Prescrição:</label>
+                <button type="button" onclick="removerPrescricao(this)" class="remove-btn"></button>
                 <input type="text" name="Prescricoes[${count}].Prescricao" class="form-control" required />
 
                 <label>Horário da Prescrição:</label>
                 <input type="time" name="Prescricoes[${count}].HorarioPrescricao" class="form-control" required />
-
-                <button type="button" onclick="removerPrescricao(this)">Remover</button>
-
-                <hr />
             `;
 
             container.appendChild(div);

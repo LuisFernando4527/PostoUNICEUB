@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5D1CvgrS3T7BAnNJr8pXkUoZA8kU1Ue7SoFwHu3Y+l8=",
+  "Hash": "wI/sHOBGXBNbqPve4l1Xh9PJYvNu6kUKHJo/uonX71s=",
   "Source": "PostoUNICEUB",
   "BasePath": "_content/PostoUNICEUB",
   "Mode": "Default",
@@ -72,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\search.svg"
+    },
+    {
+      "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\trash.png",
+      "SourceId": "PostoUNICEUB",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\",
+      "BasePath": "_content/PostoUNICEUB",
+      "RelativePath": "assets/trash.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\trash.png"
     },
     {
       "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\diagnosis.css",
