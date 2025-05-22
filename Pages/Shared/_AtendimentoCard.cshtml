@@ -1,0 +1,35 @@
+@using PostoUNICEUB.Models
+@model AtendimentoCardModel
+
+<div class="card-posto">
+    <div class="name-container">
+        <h3>@Model.Atendimento.Paciente?.nmPaciente</h3>
+        <p class="@Model.StatusClass status">@Model.StatusNome</p>
+    </div>
+    <div class="@Model.StatusBtn status-btn"></div>
+    <div class="footer-card">
+        <div class="text-footer">
+            <p>@Model.Atendimento.dtAtendimento.ToString("dd/MM/yyyy")</p>
+            <p>@Model.Atendimento.idAtendimento</p>
+        </div>
+        <div class="btns">
+            @if (Model.MostrarPreencher && !string.IsNullOrEmpty(Model.LinkPreencher))
+            {
+                <a class="ceub-button" asp-page="@Model.LinkPreencher" asp-route-idAtendimento="@Model.Atendimento.idAtendimento">
+                    Preencher
+                </a>
+            }
+
+            <a class="ceub-button" asp-page="Treatment/Diagnosis" asp-route-idAtendimento="@Model.Atendimento.idAtendimento" asp-route-IsReadOnly="true">
+                Visualizar
+            </a>
+
+            @if (Model.PodeEditar)
+            {
+                <a class="ceub-button" asp-page="/Atendimento/Edit" asp-route-idAtendimento="@Model.Atendimento.idAtendimento">
+                    Editar
+                </a>
+            }
+        </div>
+    </div>
+</div>

@@ -15,9 +15,9 @@ namespace PostoUNICEUB.Pages.Treatment
         {
             _context = context;
         }
+
         [BindProperty(SupportsGet = true)]
         public bool IsReadOnly { get; set; } = false;
-
 
         [BindProperty(SupportsGet = true)]
         public int idAtendimento { get; set; }
@@ -26,8 +26,10 @@ namespace PostoUNICEUB.Pages.Treatment
         public bool readonlyMode { get; set; }
 
         public Atendimento Atendimento { get; set; }
+
         public List<Diagnostico> Diagnosticos { get; set; } = new();
         public List<int> DiagnosticosMarcados { get; set; } = new();
+
         public List<string> PrescricoesPadrao { get; set; } = new()
         {
             "Sinais Vitais",
@@ -35,8 +37,8 @@ namespace PostoUNICEUB.Pages.Treatment
             "Observar queixas de dor, perda dos sentidos",
             "Observar local da punção venosa caso haja, realizar ECG se necessário"
         };
-        public List<PrescricaoEnfermagem> PrescricoesExistentes { get; set; } = new();
 
+        public List<PrescricaoEnfermagem> PrescricoesExistentes { get; set; } = new();
 
         [BindProperty]
         public List<int> SelectedDiagnosticos { get; set; } = new();
@@ -47,8 +49,9 @@ namespace PostoUNICEUB.Pages.Treatment
         public void OnGet()
         {
             PrescricoesExistentes = _context.PrescricaoEnfermagem
-            .Where(p => p.Atendimento.idAtendimento == idAtendimento)
-            .ToList();
+                .Where(p => p.Atendimento.idAtendimento == idAtendimento)
+                .ToList();
+
             Diagnosticos = _context.Diagnostico.ToList();
 
             Atendimento = _context.Atendimento
@@ -74,6 +77,9 @@ namespace PostoUNICEUB.Pages.Treatment
             {
                 return NotFound();
             }
+
+            // Atualiza status do atendimento para Diagnóstico de Enfermagem
+            atendimento.status = StatusAtendimento.Prontuario;
 
             foreach (var idDiagnostico in SelectedDiagnosticos)
             {

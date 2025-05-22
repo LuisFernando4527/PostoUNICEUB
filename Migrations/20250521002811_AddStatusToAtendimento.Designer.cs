@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostoCeub.Data.Entities;
 
@@ -11,9 +12,11 @@ using PostoCeub.Data.Entities;
 namespace PostoUNICEUB.Migrations
 {
     [DbContext(typeof(PostoCeubDbContext))]
-    partial class PostoCeubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250521002811_AddStatusToAtendimento")]
+    partial class AddStatusToAtendimento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,6 +58,9 @@ namespace PostoUNICEUB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idAtendimento"));
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("dtAtendimento")
                         .HasColumnType("datetime2");
 
@@ -65,9 +71,6 @@ namespace PostoUNICEUB.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("idPaciente")
-                        .HasColumnType("int");
-
-                    b.Property<int>("status")
                         .HasColumnType("int");
 
                     b.HasKey("idAtendimento");

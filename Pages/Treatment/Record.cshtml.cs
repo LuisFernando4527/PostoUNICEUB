@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+Ôªøusing Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PostoCeub.Data.Entities;
 using System.Collections.Generic;
@@ -9,17 +9,18 @@ namespace PostoUNICEUB.Pages.Treatment
 {
     public class RecordModel : PageModel
     {
-
         [BindProperty(SupportsGet = true)]
         public bool IsReadOnly { get; set; }
 
-        // Pegando ID paciente
         [BindProperty(SupportsGet = true)]
         public int idAtendimento { get; set; }
 
         public Atendimento Atendimento { get; set; }
 
+        public string NomePaciente { get; set; }
+
         private readonly PostoCeubDbContext _context;
+
         public RecordModel(PostoCeubDbContext context)
         {
             _context = context;
@@ -30,61 +31,57 @@ namespace PostoUNICEUB.Pages.Treatment
 
         public async Task<IActionResult> OnGetAsync()
         {
+            var atendimento = await _context.Atendimento
+                .Include(a => a.Paciente)
+                .FirstOrDefaultAsync(a => a.idAtendimento == idAtendimento);
+
+            if (atendimento == null || atendimento.Paciente == null)
+                return NotFound();
+
+            NomePaciente = atendimento.Paciente.nmPaciente;
+
             if (IsReadOnly)
             {
-                // Modo de visualizaÁ„o - carrega prontu·rio existente
                 Prontuario = await _context.Prontuario
                     .Include(p => p.Atendimento)
                     .FirstOrDefaultAsync(p => p.Atendimento.idAtendimento == idAtendimento);
             }
             else
             {
-                // Modo de criaÁ„o - inicializa com atendimento (sem carregar Prontuario do banco)
                 Prontuario = new Prontuario();
             }
 
             return Page();
         }
 
-
-
         public async Task<IActionResult> OnPostAsync()
         {
             ModelState.Remove("Prontuario.Atendimento");
             ModelState.Remove("Prontuario.Medico");
-            // Associa o idAtendimento ao prontu·rio
+
             Prontuario.Atendimento = await _context.Atendimento.FindAsync(idAtendimento);
 
             if (Prontuario.Atendimento == null)
             {
-                ModelState.AddModelError("", "Atendimento n„o encontrado.");
+                ModelState.AddModelError("", "Atendimento n√£o encontrado.");
                 return Page();
             }
 
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("Deu ERRO");
-
-                foreach (var entry in ModelState)
-                {
-                    var key = entry.Key;
-                    var errors = entry.Value.Errors;
-                }
-
                 return Page();
             }
 
-            // Salva o prontu·rio no banco
+            // ‚úÖ Atualiza o status do atendimento para 2 (Prontu√°rio)
+            Prontuario.Atendimento.status = StatusAtendimento.PrescricaoMedica;
+
+            // Salva o prontu√°rio
             _context.Prontuario.Add(Prontuario);
+
+            // Salva todas as altera√ß√µes (incluindo o status do atendimento)
             await _context.SaveChangesAsync();
 
-            // Redireciona para a p·gina de pacientes com uma mensagem de sucesso
-            return RedirectToPage("/Treatment/MedicalPrescription", new { idAtendimento = idAtendimento });
-
+            return RedirectToPage("/Treatment/MedicalPrescription", new { idAtendimento });
         }
     }
-
-
-
-
 }

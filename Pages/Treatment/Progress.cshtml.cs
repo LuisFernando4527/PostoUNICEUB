@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PostoCeub.Data.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class ProgressModel : PageModel
 {
@@ -48,20 +50,21 @@ public class ProgressModel : PageModel
             Evolucao = e.evolucao,
             IdEnfermeiro = e.idEnfermeiro ?? 0
         }).ToList();
-        
+
         var atendimento = await _context.Atendimento
-                .Include(a => a.Paciente)
-                .FirstOrDefaultAsync(a => a.idAtendimento == idAtendimento);
+            .Include(a => a.Paciente)
+            .FirstOrDefaultAsync(a => a.idAtendimento == idAtendimento);
+
+        if (atendimento == null || atendimento.Paciente == null)
+            return NotFound();
 
         NomePaciente = atendimento.Paciente.nmPaciente;
 
-        // Garante ao menos 1 campo se estiver vazio (modo edição)
         if (Evolucoes.Count == 0 && !IsReadOnly)
             Evolucoes.Add(new EvolucaoInputModel());
 
         return Page();
     }
-
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -69,7 +72,8 @@ public class ProgressModel : PageModel
             return Page();
 
         var atendimento = await _context.Atendimento.FindAsync(idAtendimento);
-        if (atendimento == null) return NotFound();
+        if (atendimento == null)
+            return NotFound();
 
         foreach (var item in Evolucoes)
         {
@@ -84,9 +88,13 @@ public class ProgressModel : PageModel
             _context.EvolucaoEnfermagem.Add(evolucao);
         }
 
+      
+        atendimento.status = StatusAtendimento.Concluido;
+
         await _context.SaveChangesAsync();
+
         TempData["SuccessMessage"] = "Atendimento cadastrado com sucesso";
-        return RedirectToPage("/Index"); 
+
+        return RedirectToPage("/Index");
     }
 }
-

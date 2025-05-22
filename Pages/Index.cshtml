@@ -9,62 +9,73 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/index.css" />
 </head>
 <body>
     @if (TempData["SuccessMessage"] != null)
-{
+    {
     <div class="alert alert-success">
         @TempData["SuccessMessage"]
     </div>
-
-
-}
+    }
 
     @if (Model.IsMedico)
-{
+    {
     <p>Você está logado como <strong>Médico</strong>.</p>
-}
-else if (Model.IsEnfermeiro)
-{
+    }
+    else if (Model.IsEnfermeiro)
+    {
     <p>Você está logado como <strong>Enfermeiro</strong>.</p>
-}
-else if (Model.IsAdmin)
-{
+    }
+    else if (Model.IsAdmin)
+    {
     <p>Você está logado como <strong>Administrador</strong>.</p>
-}
-else
-{
+    }
+    else
+    {
     <p>Você não tem um papel definido.</p>
-}
+    }
+
     <div class="care-container">
-        <form method="get">
-            <input class="searchbar" type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Pesquisar por nome, ID ou data">
-        </form>
         <h1>Atendimentos</h1>
+        <form method="get">
+            <input class="searchbar" type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Pesquisar por nome, ID ou data" />
+        </form>
 
-        @foreach (var atendimento in Model.ListaAtendimentos){
-{
-        <div class="care-card">
-            <div class="text-container">
-                <p>@atendimento.dtAtendimento</p>
-                <h3>@atendimento.Paciente?.nmPaciente</h3>
-                <p>@atendimento.idAtendimento</p>
-            </div>
-            <a class="ceub-button" asp-page="/Treatment/Diagnosis" asp-route-idAtendimento="@atendimento.idAtendimento" asp-route-IsReadOnly="true">
-                Visualizar
-            </a>
+        <div class="card-container">
 
+            @* Para ADMIN - todos atendimentos *@
+            @if (Model.IsAdmin)
+            {
+            <h2>Todos os atendimentos</h2>
+            @foreach (var card in Model.TodosAtendimentosAdmin)
+                {
+            <partial name="_AtendimentoCard" model="card" />
+                }
+            }
+
+            @* Para MÉDICO e ENFERMEIRO - atendimentos preenchíveis e não preenchíveis *@
+            @if (Model.IsMedico || Model.IsEnfermeiro)
+            {
+            <h2>Pendentes</h2>
+            @foreach (var card in Model.AtendimentosPreenchiveis)
+                {
+            <partial name="_AtendimentoCard" model="card" />
+                }
+
+            <h2>Outros atendimentos</h2>
+            @foreach (var card in Model.AtendimentosNaoPreenchiveis)
+                {
+            <partial name="_AtendimentoCard" model="card" />
+                }
+            }
         </div>
-        }
-}
 
         <div class="buttons-container">
             <button asp-area="" asp-page="/Privacy">Consultar Atendimentos</button>
             <a class="ceub-button" asp-area="" asp-page="/Pacient">Novo atendimento</a>
         </div>
     </div>
-
 </body>
 </html>
 

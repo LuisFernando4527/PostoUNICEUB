@@ -1,21 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using PostoCeub.Data.Entities;
+using PostoUNICEUB.Models;
+using PostoUNICEUB.Services;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using PostoUNICEUB.Services;
-
+using System.Threading.Tasks;
 
 namespace PostoUNICEUB.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly IUserRoleService _roleService;
-
-        public bool IsMedico => _roleService.IsMedico();
-        public bool IsEnfermeiro => _roleService.IsEnfermeiro();
-        public bool IsAdmin => _roleService.IsAdmin();
         private readonly PostoCeubDbContext _context;
 
         public IndexModel(IUserRoleService roleService, PostoCeubDbContext context)
@@ -24,28 +21,107 @@ namespace PostoUNICEUB.Pages
             _context = context;
         }
 
+        public bool IsMedico => _roleService.IsMedico();
+        public bool IsEnfermeiro => _roleService.IsEnfermeiro();
+        public bool IsAdmin => _roleService.IsAdmin();
 
+        public readonly Dictionary<int, string> StatusNomes = new()
+        {
+            {1, "Diagnóstico de Enfermagem"},
+            {2, "Prontuário"},
+            {3, "Prescrição Médica"},
+            {4, "Evolução"},
+            {5, "Concluído"}
+        };
 
-        public List<Atendimento> ListaAtendimentos { get; set; }
+        public List<AtendimentoCardModel> AtendimentosPreenchiveis { get; set; } = new();
+        public List<AtendimentoCardModel> AtendimentosNaoPreenchiveis { get; set; } = new();
+        public List<AtendimentoCardModel> TodosAtendimentosAdmin { get; set; } = new();
+
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            // Inclui os dados do Paciente ao buscar os Atendimentos
-            var query = _context.Atendimento
-                 .Include(a => a.Paciente)  // Inclui o paciente relacionado a cada atendimento
-                 .AsQueryable();
+            var lista = await ObterTodosAtendimentosOrdenadosPorDataDesc();
 
-            // Filtra por nome do paciente, ID do atendimento ou data de atendimento
+            foreach (var atendimento in lista)
+            {
+                var status = atendimento.status;
+                var statusInt = (int)status;
+                var statusNome = StatusNomes.ContainsKey(statusInt) ? StatusNomes[statusInt] : "Desconhecido";
+
+                var card = new AtendimentoCardModel
+                {
+                    Atendimento = atendimento,
+                    StatusNome = statusNome,
+                    StatusClass = statusInt == 5 ? "status-concluido" : "status-alerta",
+                    StatusBtn = statusInt == 5 ? "check-status" : "warning-status"
+                };
+
+                if (IsAdmin)
+                {
+                    card.MostrarPreencher = true;
+                    card.LinkPreencher = ObterLinkPorStatus(status);
+                    card.PodeEditar = true;
+                    TodosAtendimentosAdmin.Add(card);
+                }
+                else if (IsMedico)
+                {
+                    if (status == StatusAtendimento.Prontuario || status == StatusAtendimento.PrescricaoMedica)
+                    {
+                        card.MostrarPreencher = true;
+                        card.LinkPreencher = ObterLinkPorStatus(status);
+                        AtendimentosPreenchiveis.Add(card);
+                    }
+                    else
+                    {
+                        AtendimentosNaoPreenchiveis.Add(card);
+                    }
+                }
+                else if (IsEnfermeiro)
+                {
+                    if (status == StatusAtendimento.DiagnosticoDeEnfermagem || status == StatusAtendimento.Evolucao)
+                    {
+                        card.MostrarPreencher = true;
+                        card.LinkPreencher = ObterLinkPorStatus(status);
+                        AtendimentosPreenchiveis.Add(card);
+                    }
+                    else
+                    {
+                        AtendimentosNaoPreenchiveis.Add(card);
+                    }
+                }
+            }
+        }
+
+        private async Task<List<Atendimento>> ObterTodosAtendimentosOrdenadosPorDataDesc()
+        {
+            var query = _context.Atendimento
+                .Include(a => a.Paciente)
+                .AsQueryable();
+
             if (!string.IsNullOrEmpty(SearchTerm))
             {
-                query = query.Where(a => a.Paciente.nmPaciente.Contains(SearchTerm)
-                                      || a.idAtendimento.ToString().Contains(SearchTerm)
-                                      || a.dtAtendimento.ToString().Contains(SearchTerm));
+                query = query.Where(a =>
+                    a.Paciente.nmPaciente.Contains(SearchTerm) ||
+                    a.idAtendimento.ToString().Contains(SearchTerm) ||
+                    a.dtAtendimento.ToString().Contains(SearchTerm));
             }
 
-            ListaAtendimentos = query.ToList();
+            return await query.OrderByDescending(a => a.dtAtendimento).ToListAsync();
+        }
+
+        private string? ObterLinkPorStatus(StatusAtendimento status)
+        {
+            return status switch
+            {
+                StatusAtendimento.DiagnosticoDeEnfermagem => "/Treatment/Diagnosis",
+                StatusAtendimento.Evolucao => "/Treatment/Progress",
+                StatusAtendimento.Prontuario => "/Treatment/Record",
+                StatusAtendimento.PrescricaoMedica => "/Treatment/Prescription",
+                _ => null
+            };
         }
     }
 }

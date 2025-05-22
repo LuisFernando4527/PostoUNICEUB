@@ -10,55 +10,59 @@
     <link rel="stylesheet" href="~/css/record.css">
 </head>
 <body>
-    <h1 style="color:#43054E; text-align: center; margin-bottom: 16px">Prontu�rio</h1>
-    <div class="record-container">
+    <h1 style="color:#43054E; text-align: center; margin-bottom: 16px">Prontuário</h1>
+
+    <p><strong>Paciente:</strong> @Model.NomePaciente</p>
+    <p><strong>Número atendimento:</strong> @Model.idAtendimento</p>
 
         <form method="post">
+    <div class="prescricao-item">
             <div class="form-group">
                 <label asp-for="Prontuario.qp">Queixa Principal (QP):</label>
-                <textarea asp-for="Prontuario.qp" rows="3"></textarea>
+                <textarea class="mb-4" asp-for="Prontuario.qp" rows="3"></textarea>
             </div>
 
             <div class="form-group">
-                <label asp-for="Prontuario.hda">Hist�ria da Doen�a Atual (HDA):</label>
-                <textarea asp-for="Prontuario.hda" rows="3"></textarea>
+                <label asp-for="Prontuario.hda">História da Doença Atual (HDA):</label>
+                <textarea class="mb-4" asp-for="Prontuario.hda" rows="3"></textarea>
             </div>
 
             <div class="form-group">
-                <label asp-for="Prontuario.hpp">Hist�ria Patol�gica Pregressa (HPP):</label>
-                <textarea asp-for="Prontuario.hpp" rows="3"></textarea>
+                <label asp-for="Prontuario.hpp">História Patológica Pregressa (HPP):</label>
+                <textarea class="mb-4" asp-for="Prontuario.hpp" rows="3"></textarea>
             </div>
 
             <div class="form-group">
-                <label asp-for="Prontuario.exameFisico">Exame F�sico:</label>
-                <textarea asp-for="Prontuario.exameFisico" rows="5"></textarea>
+                <label asp-for="Prontuario.exameFisico">Exame Físico:</label>
+                <textarea class="mb-4" asp-for="Prontuario.exameFisico" rows="5"></textarea>
             </div>
 
             <div class="form-group">
-                <label asp-for="Prontuario.hd">Hip�tese Diagn�stica (HD):</label>
-                <textarea asp-for="Prontuario.hd" rows="3"></textarea>
+                <label asp-for="Prontuario.hd">Hipótese Diagnóstica (HD):</label>
+                <textarea class="mb-4" asp-for="Prontuario.hd" rows="3"></textarea>
             </div>
 
             <div class="form-group">
                 <label asp-for="Prontuario.conduta">Conduta:</label>
-                <textarea asp-for="Prontuario.conduta" rows="5"></textarea>
+                <textarea class="mb-4" asp-for="Prontuario.conduta" rows="5"></textarea>
             </div>
+    </div>
 
-            <div class="button-group">
-                @if (!Model.IsReadOnly ){
-                    <a class="ceub-button" asp-page="/Treatment/Diagnosis" asp-route-idAtendimento="@Model.idAtendimento">Voltar</a>
-                    <button type="submit" class="ceub-button">Cadastrar</button>
+    <div class="button-group">
+        @if (!Model.IsReadOnly ){
+        <a class="ceub-button" asp-page="/Treatment/Diagnosis" asp-route-idAtendimento="@Model.idAtendimento">Voltar</a>
+        <button type="submit" class="ceub-button">Cadastrar</button>
                     }else{
 
-                    <a class="ceub-button" asp-page="/Treatment/Diagnosis" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Voltar</a>
-                    <a class="ceub-button " asp-page="/Treatment/MedicalPrescription" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Seguir</a>
+        <a class="ceub-button" asp-page="/Treatment/Diagnosis" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Voltar</a>
+        <a class="ceub-button " asp-page="/Treatment/MedicalPrescription" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Seguir</a>
 
                     }
-               </div>
-        </form>
-
-
     </div>
+    </form>
+
+
+
 </body>
 </html>
 

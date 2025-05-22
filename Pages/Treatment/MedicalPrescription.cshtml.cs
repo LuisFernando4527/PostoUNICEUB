@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+ï»¿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PostoCeub.Data.Entities;
@@ -21,7 +21,7 @@ namespace PostoUNICEUB.Pages.Treatment
         public int idAtendimento { get; set; }
 
         public string NomePaciente { get; set; }
-        
+
         [BindProperty(SupportsGet = true)]
         public bool IsReadOnly { get; set; }
 
@@ -58,13 +58,11 @@ namespace PostoUNICEUB.Pages.Treatment
             }
             else
             {
-                // Adiciona um item vazio para inserção
                 Prescricoes.Add(new PrescricaoInputModel());
             }
 
             return Page();
         }
-
 
         public async Task<IActionResult> OnPostSalvarAsync()
         {
@@ -87,14 +85,26 @@ namespace PostoUNICEUB.Pages.Treatment
                 _context.PrescricaoMedica.Add(prescricao);
             }
 
+            
+            atendimento.status = StatusAtendimento.Evolucao;
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Treatment/Progress", new { idAtendimento });
         }
-        public IActionResult OnPostPularEtapa()
-        {
-            return RedirectToPage("/Treatment/Progress", new { idAtendimento});
-        }
 
+        public async Task<IActionResult> OnPostPularEtapaAsync()
+        {
+            var atendimento = await _context.Atendimento.FindAsync(idAtendimento);
+            if (atendimento == null)
+                return NotFound();
+
+            
+            atendimento.status = StatusAtendimento.Evolucao;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("/Treatment/Progress", new { idAtendimento });
+        }
     }
 }

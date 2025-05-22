@@ -5,12 +5,24 @@
       "PackagePath": "staticwebassets\\PostoUNICEUB.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\aviso.png",
+      "PackagePath": "staticwebassets\\assets\\aviso.png"
+    },
+    {
+      "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\checkmark.png",
+      "PackagePath": "staticwebassets\\assets\\checkmark.png"
+    },
+    {
       "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\search.svg",
       "PackagePath": "staticwebassets\\assets\\search.svg"
     },
     {
       "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\trash.png",
       "PackagePath": "staticwebassets\\assets\\trash.png"
+    },
+    {
+      "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\aviso.png",
+      "PackagePath": "staticwebassets\\aviso.png"
     },
     {
       "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\css\\diagnosis.css",

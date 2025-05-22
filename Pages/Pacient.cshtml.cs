@@ -63,7 +63,8 @@ namespace PostoUNICEUB.Pages
                 var atendimento = new Atendimento
                 {
                     idPaciente = PacienteId,
-                    dtAtendimento = DateTime.Now // Data e hora do atendimento.
+                    dtAtendimento = DateTime.Now, // Data e hora do atendimento.
+                    status = StatusAtendimento.DiagnosticoDeEnfermagem
                 };
 
                 // Adicionar no banco de dados
