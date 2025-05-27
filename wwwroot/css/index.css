@@ -2,15 +2,34 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    background-color: #f5f5f5;
     border-radius: 8px;
+    padding: 24px;
 }
+.care-header{
+    width: 100%;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+.care-header form {
+    width: 100%;
+}
+
 p, h3 {
     margin: 0;
 }
 
 button:hover {
     background-color: rgb(65, 0, 82);
+}
+
+.card-container {
+    background-color: #f5f5f5;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 26px;
 }
 
 .care-card {
@@ -50,7 +69,6 @@ background-color: red;
     border-radius: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 16px;
-    margin: 16px;
     transition: box-shadow 0.3s ease;
     position: relative
 }
@@ -59,9 +77,7 @@ background-color: red;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     }
 
-.card-posto .name-container{
 
-}
 
 .check-status {
     background-image: url('/assets/checkmark.png');
@@ -102,7 +118,7 @@ background-color: red;
     padding: 4px !important;
 }
 
-.card-container {
+.card-content {
     
     display: flex;
     flex-wrap: wrap; /* permite quebra de linha quando necessário */
@@ -117,3 +133,81 @@ background-color: red;
 .status-concluido {
     background-color: #02BC7D;
 }
+
+.pagination{
+    justify-content: center;
+    margin-block-start: 12px;
+}
+.pagination ul {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    padding: 0;
+}
+
+.pagination li a {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+
+    .pagination li.active a {
+        font-weight: bold;
+        background-color: #43054E;
+        color: white;
+        border-color: #43054E;
+    }
+
+    .pagination li a:hover {
+        background-color: #d79ee2;
+        border-color: #d79ee2;
+        color: white
+    }
+
+
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    position: relative;
+}
+
+.step {
+    text-align: center;
+    flex: 1;
+    position: relative;
+    color: #999;
+}
+
+.step-number {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: white;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.step-icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+.step.active .step-number {
+    border-color: #007bff;
+    background-color: #007bff;
+    color: white;
+}
+
+.step small {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8rem;
+}
+

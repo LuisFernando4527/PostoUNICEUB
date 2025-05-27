@@ -12,8 +12,15 @@
 <body>
     <h1 style="color:#43054E; text-align: center; margin-bottom: 16px">Prontuário</h1>
 
-    <p><strong>Paciente:</strong> @Model.NomePaciente</p>
-    <p><strong>Número atendimento:</strong> @Model.idAtendimento</p>
+    <div class="record-header">
+        <div >
+            <p><strong>Paciente:</strong> @Model.NomePaciente</p>
+            <p><strong>Número atendimento:</strong> @Model.idAtendimento</p>
+
+        </div>
+        <a class="ceub-button" target="_blank" asp-page="/Treatment/Diagnosis" asp-route-idAtendimento="@Model.idAtendimento" asp-route-IsReadOnly="true">Visualizar Diagnóstico</a>
+
+    </div>
 
         <form method="post">
     <div class="prescricao-item">

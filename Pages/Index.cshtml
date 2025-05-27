@@ -37,45 +37,76 @@
     }
 
     <div class="care-container">
-        <h1>Atendimentos</h1>
-        <form method="get">
-            <input class="searchbar" type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Pesquisar por nome, ID ou data" />
-        </form>
+        <div class="care-header">
+            <h1>Atendimentos</h1>
+            <form method="get">
+                <input class="searchbar" type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Pesquisar por nome, ID ou data" />
+            </form>
+
+        </div>
 
         <div class="card-container">
 
             @* Para ADMIN - todos atendimentos *@
             @if (Model.IsAdmin)
-            {
-            <h2>Todos os atendimentos</h2>
-            @foreach (var card in Model.TodosAtendimentosAdmin)
                 {
-            <partial name="_AtendimentoCard" model="card" />
+            <h2>Todos os atendimentos</h2>
+            <div class="card-content">
+                @foreach (var card in Model.TodosAtendimentosAdmin)
+                    {
+                <partial name="_AtendimentoCard" model="card" />
+                    }
+            </div>
                 }
-            }
+
+
+
+
 
             @* Para MÉDICO e ENFERMEIRO - atendimentos preenchíveis e não preenchíveis *@
             @if (Model.IsMedico || Model.IsEnfermeiro)
             {
             <h2>Pendentes</h2>
-            @foreach (var card in Model.AtendimentosPreenchiveis)
-                {
-            <partial name="_AtendimentoCard" model="card" />
-                }
+            <div class="card-content mb-4">
+                @foreach (var card in Model.AtendimentosPreenchiveis)
+                    {
+                <partial name="_AtendimentoCard" model="card" />
+                    }
+            </div>
 
             <h2>Outros atendimentos</h2>
-            @foreach (var card in Model.AtendimentosNaoPreenchiveis)
-                {
-            <partial name="_AtendimentoCard" model="card" />
-                }
+            <div class="card-content">
+                @foreach (var card in Model.AtendimentosNaoPreenchiveisPaginados)
+                    {
+                <partial name="_AtendimentoCard" model="card" />
+                    }
+            </div>
+
+            @if (Model.TotalPages > 1)
+{
+            <nav class="pagination">
+                <ul>
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                    <li class="@(i == Model.PageNumber ? "active" : "")">
+                        <a href="?PageNumber=@i&SearchTerm=@Model.SearchTerm">@i</a>
+                    </li>
             }
+                </ul>
+            </nav>
+}
+
+
+            }
+
+
         </div>
 
-        <div class="buttons-container">
-            <button asp-area="" asp-page="/Privacy">Consultar Atendimentos</button>
-            <a class="ceub-button" asp-area="" asp-page="/Pacient">Novo atendimento</a>
+            <div class="buttons-container">
+                <button asp-area="" asp-page="/Privacy">Consultar Atendimentos</button>
+                <a class="ceub-button" asp-area="" asp-page="/Pacient">Novo atendimento</a>
+            </div>
         </div>
-    </div>
 </body>
 </html>
 

@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\assets\\aviso.png"
     },
     {
+      "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\check.svg",
+      "PackagePath": "staticwebassets\\assets\\check.svg"
+    },
+    {
       "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\checkmark.png",
       "PackagePath": "staticwebassets\\assets\\checkmark.png"
     },

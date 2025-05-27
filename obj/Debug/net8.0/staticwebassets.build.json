@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/WcV87ITCa0ClXOd9XO5jmLtvnKlbKCGsSNAVgCIF0o=",
+  "Hash": "5IA7LHt8eiNNlPt/S0sKsqsHYkDPnscqcM1EC6OjJs0=",
   "Source": "PostoUNICEUB",
   "BasePath": "_content/PostoUNICEUB",
   "Mode": "Default",
@@ -72,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\aviso.png"
+    },
+    {
+      "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\check.svg",
+      "SourceId": "PostoUNICEUB",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\",
+      "BasePath": "_content/PostoUNICEUB",
+      "RelativePath": "assets/check.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\check.svg"
     },
     {
       "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\checkmark.png",

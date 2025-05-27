@@ -41,6 +41,18 @@ namespace PostoUNICEUB.Pages
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
+        //Objetos Páginação
+        public const int PageSize = 6;
+
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; } = 1;
+
+        public int TotalPages { get; set; }
+        public int TotalAtendimentosNaoPreenchiveis { get; set; }
+
+        public List<AtendimentoCardModel> AtendimentosNaoPreenchiveisPaginados { get; set; } = new();
+
+
         public async Task OnGetAsync()
         {
             var lista = await ObterTodosAtendimentosOrdenadosPorDataDesc();
@@ -93,6 +105,17 @@ namespace PostoUNICEUB.Pages
                     }
                 }
             }
+            if (IsMedico || IsEnfermeiro)
+            {
+                TotalAtendimentosNaoPreenchiveis = AtendimentosNaoPreenchiveis.Count;
+                TotalPages = (int)Math.Ceiling(TotalAtendimentosNaoPreenchiveis / (double)PageSize);
+
+                AtendimentosNaoPreenchiveisPaginados = AtendimentosNaoPreenchiveis
+                    .Skip((PageNumber - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToList();
+            }
+
         }
 
         private async Task<List<Atendimento>> ObterTodosAtendimentosOrdenadosPorDataDesc()

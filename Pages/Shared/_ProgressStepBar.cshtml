@@ -1,0 +1,99 @@
+@model string
+
+@{
+    var statusAtual = Model;
+
+    var steps = new List<string>
+    {
+        "DiagnosticoDeEnfermagem",
+        "Prontuario",
+        "PrescricaoMedica",
+        "Evolucao"
+    };
+
+    var stepLabels = new Dictionary<string, string>
+    {
+        { "DiagnosticoDeEnfermagem", "Diagnóstico" },
+        { "Prontuario", "Prontuário" },
+        { "PrescricaoMedica", "Prescrição" },
+        { "Evolucao", "Anotação" }
+    };
+
+    var currentIndex = steps.IndexOf(statusAtual);
+}
+
+<div class="step-bar">
+    @for (int i = 0; i < steps.Count; i++)
+    {
+        var status = "";
+        if (i < currentIndex)
+        {
+            status = "completed";
+        }
+        else if (i == currentIndex)
+        {
+            status = "current";
+        }
+
+        var borderClass = i == 0 ? "first" : (i == steps.Count - 1 ? "last" : "");
+
+    <div class="step @status @borderClass">
+        <span class="step-label">@stepLabels[steps[i]]</span>
+    </div>
+    }
+</div>
+
+<style>
+    .step-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 30px 0;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .step {
+        flex: 1;
+        text-align: center;
+        padding: 6px 0;
+        position: relative;
+        max-width: 100%;
+    }
+
+        .step::after {
+            content: "";
+            display: block;
+            height: 12px;
+            margin: 4px auto 0 auto;
+            transition: background-color 0.3s;
+            background-color: #e0e0e0; /* Futuro */
+            width: 100%;
+        }
+
+        .step.completed::after {
+            background-color: #43054E;
+        }
+
+        .step.current::after {
+            background-color: #dab0e2;
+        }
+
+        .step.first::after {
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+
+        .step.last::after {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+    .step-label {
+        color: #2e2e2e;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 6px;
+        white-space: nowrap;
+    }
+</style>

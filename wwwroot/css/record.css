@@ -15,3 +15,10 @@ form {
     font-size: 20px;
     font-weight: bold;
 }
+
+.record-header {
+    display: flex;
+    margin-block-end: 16px;
+    justify-content: space-between;
+    align-items: end;
+}
