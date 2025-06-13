@@ -1,17 +1,16 @@
 services:
-  # Serviço da sua API (usa o Dockerfile do seu repositório)
+  # Serviço da sua API
   - type: web
     name: minha-api-prontuario
-    env: docker # Esta linha está CORRETA aqui, pois ele usa seu Dockerfile
-    startCommand: "while ! nc -z sql-server 1433; do sleep 1; done & dotnet PostoUNICEUB.dll"
+    env: docker
+    # A LINHA "startCommand" FOI REMOVIDA DAQUI
     envVars:
       - key: ConnectionStrings__DefaultConnection
         value: "Server=sql-server;Database=ProntuarioDB;User Id=sa;Password=${SQL_SERVER_PASSWORD};TrustServerCertificate=True"
 
-  # Serviço do seu Banco de Dados SQL Server (usa uma imagem pronta da internet)
+  # Serviço do seu Banco de Dados SQL Server
   - type: pserv
     name: sql-server
-    # NÃO HÁ "env: docker" AQUI. Em vez disso, usamos o bloco "image" abaixo:
     image:
       url: mcr.microsoft.com/mssql/server:2022-latest
     disk:
