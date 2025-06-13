@@ -3,28 +3,26 @@ services:
   - type: web
     name: minha-api-prontuario
     env: docker
-    # Garante que o banco de dados inicie antes da API
     startCommand: "while ! nc -z sql-server 1433; do sleep 1; done & dotnet PostoUNICEUB.dll"
     envVars:
       - key: ConnectionStrings__DefaultConnection
-        # A API vai se conectar ao serviço 'sql-server' internamente
         value: "Server=sql-server;Database=ProntuarioDB;User Id=sa;Password=${SQL_SERVER_PASSWORD};TrustServerCertificate=True"
 
   # Serviço do seu Banco de Dados SQL Server
-  - type: pserv  # <-- CORREÇÃO DEFINITIVA (abreviação de Private Service)
+  - type: pserv
     name: sql-server
     env: docker
-    dockerImage: mcr.microsoft.com/mssql/server:2022-latest
-    # Disco persistente para não perder os dados
+    # Bloco 'docker' corrigido abaixo
+    docker:
+      image: mcr.microsoft.com/mssql/server:2022-latest
     disk:
       name: sql-server-data
       mountPath: /var/opt/mssql
-      sizeGB: 5 # Ajuste conforme necessário
+      sizeGB: 5
     envVars:
       - key: ACCEPT_EULA
         value: "Y"
       - key: SQL_SERVER_SA_PASSWORD
-        # O Render vai te pedir para criar essa senha segura no painel
         generateValue: true
       - key: MSSQL_PID
-        value: "Developer" # Edição Developer ou Express para começar
+        value: "Developer"
