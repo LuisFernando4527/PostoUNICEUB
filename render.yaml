@@ -1,26 +1,9 @@
 services:
-  # Serviço da sua API
+  # O Blueprint agora cuida APENAS da API
   - type: web
     name: minha-api-prontuario
     env: docker
-    # A LINHA "startCommand" FOI REMOVIDA DAQUI
     envVars:
       - key: ConnectionStrings__DefaultConnection
+        # A senha virá de uma variável de ambiente que criaremos manualmente
         value: "Server=sql-server;Database=ProntuarioDB;User Id=sa;Password=${SQL_SERVER_PASSWORD};TrustServerCertificate=True"
-
-  # Serviço do seu Banco de Dados SQL Server
-  - type: pserv
-    name: sql-server
-    image:
-      url: mcr.microsoft.com/mssql/server:2022-latest
-    disk:
-      name: sql-server-data
-      mountPath: /var/opt/mssql
-      sizeGB: 5
-    envVars:
-      - key: ACCEPT_EULA
-        value: "Y"
-      - key: SQL_SERVER_SA_PASSWORD
-        generateValue: true
-      - key: MSSQL_PID
-        value: "Developer"
