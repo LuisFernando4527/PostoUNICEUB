@@ -11,7 +11,7 @@ services:
         value: "Server=sql-server;Database=ProntuarioDB;User Id=sa;Password=${SQL_SERVER_PASSWORD};TrustServerCertificate=True"
 
   # Serviço do seu Banco de Dados SQL Server
-  - type: privateservice
+  - type: private  # <-- ESTA É A CORREÇÃO
     name: sql-server
     env: docker
     dockerImage: mcr.microsoft.com/mssql/server:2022-latest
