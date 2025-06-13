@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PostoCeub.Data.Entities;
-using PostoUNICEUB.Services; // <-- Crie essa pasta para o serviço de role
+using PostoUNICEUB.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +32,28 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// ======================================================================
+// 🚀 INÍCIO: Bloco para aplicar migrations automaticamente
+// Este código executa o 'update-database' toda vez que a API inicia.
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContext = services.GetRequiredService<PostoCeubDbContext>();
+        dbContext.Database.Migrate(); // Aplica as migrations
+    }
+    catch (Exception ex)
+    {
+        // Loga o erro caso a migration falhe, para ajudar na depuração.
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocorreu um erro ao aplicar as migrations do banco de dados.");
+    }
+}
+// 🚀 FIM: Bloco para aplicar migrations
+// ======================================================================
+
+// O resto do seu código continua exatamente igual
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
