@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PostoCeub.Data.Entities;
 using System;
@@ -30,17 +31,14 @@ namespace PostoUNICEUB.Controllers
                 .Include(a => a.Enfermeiro).ThenInclude(e => e.Usuario)
                 .AsQueryable();
 
-            // Busca por ID
             if (int.TryParse(busca, out int id))
             {
                 query = query.Where(a => a.idAtendimento == id);
             }
-            // Busca por data (formato: yyyy-MM-dd ou dd/MM/yyyy)
             else if (DateTime.TryParse(busca, out DateTime data))
             {
                 query = query.Where(a => a.dtAtendimento.Date == data.Date);
             }
-            // Busca por nome
             else
             {
                 query = query.Where(a => a.Paciente.nmPaciente.Contains(busca));
@@ -60,5 +58,39 @@ namespace PostoUNICEUB.Controllers
 
             return Ok(resultados);
         }
+
+        [HttpGet("resumo/{idAtendimento}")]
+        public async Task<IActionResult> ObterResumo(int idAtendimento)
+        {
+            var prescricoesEnfermagem = await _context.PrescricaoEnfermagem
+                .Where(p => p.idAtendimento == idAtendimento)
+                .Include(p => p.Enfermeiro)
+                    .ThenInclude(e => e.Usuario)
+                .Select(p => new
+                {
+                    p.idPrescricaoEnfermagem,
+                    p.anotacao,
+                    Enfermeiro = p.Enfermeiro != null ? p.Enfermeiro.Usuario.nmUsuario : null
+                })
+                .ToListAsync();
+
+            var diagnosticoIds = await _context.DiagnosticoAtendimento
+                .Where(d => d.idAtendimento == idAtendimento)
+                .Select(d => d.idDiagnostico)
+                .ToListAsync();
+
+            var diagnosticos = await _context.Diagnostico
+                .Where(d => diagnosticoIds.Contains(d.idDiagnostico))
+                .ToListAsync();
+
+            var resultado = new
+            {
+                prescricoesEnfermagem,
+                diagnostico = diagnosticos
+            };
+
+            return Ok(resultado);
+        }
+
     }
 }

@@ -9,6 +9,7 @@ public class PrescricaoEnfermagem
     [Column(TypeName = "varchar(500)")]
     public string anotacao { get; set; }
 
+    public int idAtendimento { get; set; }
     [ForeignKey("idAtendimento")]
     public virtual Atendimento Atendimento { get; set; }
 
