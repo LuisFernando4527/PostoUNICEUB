@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PostoCeub.Data.Entities;
 using System;
@@ -47,12 +46,17 @@ namespace PostoUNICEUB.Controllers
             var resultados = await query
                 .Select(a => new
                 {
-                    a.idAtendimento,
-                    Dia = a.dtAtendimento.ToString("yyyy-MM-dd"),
-                    Hora = a.dtAtendimento.ToString("HH:mm"),
-                    Paciente = a.Paciente.nmPaciente,
-                    Medico = a.Medico != null ? a.Medico.Usuario.nmUsuario : null,
-                    Enfermeiro = a.Enfermeiro != null ? a.Enfermeiro.Usuario.nmUsuario : null,
+                    // ======================================================================
+                    // ✅ INÍCIO: Alterações para padronizar e incluir o status
+                    idAtendimento = a.idAtendimento,
+                    dia = a.dtAtendimento.ToString("yyyy-MM-dd"),
+                    hora = a.dtAtendimento.ToString("HH:mm"),
+                    paciente = a.Paciente.nmPaciente,
+                    medico = a.Medico != null ? a.Medico.Usuario.nmUsuario : null,
+                    enfermeiro = a.Enfermeiro != null ? a.Enfermeiro.Usuario.nmUsuario : null,
+                    status = (int)a.status // <-- CAMPO ADICIONADO E PADRONIZADO
+                    // ✅ FIM: Alterações
+                    // ======================================================================
                 })
                 .ToListAsync();
 
