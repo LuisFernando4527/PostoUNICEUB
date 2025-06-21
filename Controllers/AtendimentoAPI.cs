@@ -46,15 +46,17 @@ namespace PostoUNICEUB.Controllers
             var resultados = await query
                 .Select(a => new
                 {
-                    // ===== Bloco Alterado =====
                     idAtendimento = a.idAtendimento,
                     dia = a.dtAtendimento.ToString("yyyy-MM-dd"),
                     hora = a.dtAtendimento.ToString("HH:mm"),
                     paciente = a.Paciente.nmPaciente,
-                    medico = a.Medico != null ? a.Medico.Usuario.nmUsuario : null,
-                    enfermeiro = a.Enfermeiro != null ? a.Enfermeiro.Usuario.nmUsuario : null,
+                    // ==========================================================
+                    // ✅ INÍCIO: Alteração para retornar string vazia em vez de nulo
+                    medico = a.Medico != null ? a.Medico.Usuario.nmUsuario : "",
+                    enfermeiro = a.Enfermeiro != null ? a.Enfermeiro.Usuario.nmUsuario : "",
+                    // ✅ FIM: Alteração
+                    // ==========================================================
                     status = (int)a.status
-                    // ===== Fim do Bloco Alterado =====
                 })
                 .ToListAsync();
 
@@ -93,6 +95,5 @@ namespace PostoUNICEUB.Controllers
 
             return Ok(resultado);
         }
-
     }
 }
