@@ -46,17 +46,15 @@ namespace PostoUNICEUB.Controllers
             var resultados = await query
                 .Select(a => new
                 {
-                    // ======================================================================
-                    // ✅ INÍCIO: Alterações para padronizar e incluir o status
+                    // ===== Bloco Alterado =====
                     idAtendimento = a.idAtendimento,
                     dia = a.dtAtendimento.ToString("yyyy-MM-dd"),
                     hora = a.dtAtendimento.ToString("HH:mm"),
                     paciente = a.Paciente.nmPaciente,
                     medico = a.Medico != null ? a.Medico.Usuario.nmUsuario : null,
                     enfermeiro = a.Enfermeiro != null ? a.Enfermeiro.Usuario.nmUsuario : null,
-                    status = (int)a.status // <-- CAMPO ADICIONADO E PADRONIZADO
-                    // ✅ FIM: Alterações
-                    // ======================================================================
+                    status = (int)a.status
+                    // ===== Fim do Bloco Alterado =====
                 })
                 .ToListAsync();
 

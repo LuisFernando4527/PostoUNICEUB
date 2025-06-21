@@ -32,8 +32,6 @@ builder.Services.AddSwaggerGen();
 
 // ======================================================================
 // ✅ 1. ADICIONAR SERVIÇO DE CORS
-// Define uma política chamada "AllowAll" que permite que qualquer site externo
-// (como o FlutterFlow) faça chamadas para esta API.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
@@ -49,8 +47,6 @@ var app = builder.Build();
 
 // ======================================================================
 // ✅ 2. APLICAR MIGRATIONS AUTOMATICAMENTE
-// Este bloco executa as migrações do Entity Framework na inicialização,
-// garantindo que o banco de dados no Azure esteja sempre atualizado.
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -76,8 +72,6 @@ app.UseRouting();
 
 // ======================================================================
 // ✅ 3. USAR O MIDDLEWARE DO CORS
-// Esta linha ativa a política de CORS que definimos acima.
-// A ordem é importante: depois de UseRouting e antes de UseAuthorization.
 app.UseCors("AllowAll");
 // ======================================================================
 
