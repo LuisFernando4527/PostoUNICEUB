@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostoCeub.Data.Entities;
 
@@ -11,9 +12,11 @@ using PostoCeub.Data.Entities;
 namespace PostoUNICEUB.Migrations
 {
     [DbContext(typeof(PostoCeubDbContext))]
-    partial class PostoCeubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250622023207_AdicionaSenhaNaTabelaUsuario")]
+    partial class AdicionaSenhaNaTabelaUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

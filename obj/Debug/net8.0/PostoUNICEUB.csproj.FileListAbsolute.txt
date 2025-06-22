@@ -419,3 +419,4 @@ C:\Users\luism\source\repos\Posto\obj\Debug\net8.0\refint\PostoUNICEUB.dll
 C:\Users\luism\source\repos\Posto\obj\Debug\net8.0\PostoUNICEUB.pdb
 C:\Users\luism\source\repos\Posto\obj\Debug\net8.0\PostoUNICEUB.genruntimeconfig.cache
 C:\Users\luism\source\repos\Posto\obj\Debug\net8.0\ref\PostoUNICEUB.dll
+C:\Users\luism\source\repos\Posto\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
