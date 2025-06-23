@@ -38,7 +38,6 @@ namespace PostoUNICEUB.Controllers
                 .FirstOrDefaultAsync(u => u.edEmail == loginRequest.Email);
 
             // 2. Verifica se o usuário existe e se a senha está correta
-            // (IMPORTANTE: No mundo real, a senha deve ser "hasheada" e comparada com o hash)
             if (usuario == null || usuario.senha != loginRequest.Senha)
             {
                 return Unauthorized("E-mail ou senha inválidos.");
@@ -54,7 +53,6 @@ namespace PostoUNICEUB.Controllers
                 {
                     new Claim(ClaimTypes.NameIdentifier, usuario.idUsuario.ToString()),
                     new Claim(ClaimTypes.Email, usuario.edEmail)
-                    // Você pode adicionar mais "claims" (informações) aqui, como a role do usuário
                 }),
                 Expires = DateTime.UtcNow.AddHours(8), // Duração do token
                 Issuer = _configuration["Jwt:Issuer"],
@@ -69,22 +67,19 @@ namespace PostoUNICEUB.Controllers
             return Ok(new { Token = tokenString });
         }
 
-        // ==========================================================
-        // ✅ INÍCIO: Adição do endpoint de teste protegido
-        [Authorize] // <--- Garante que só usuários com token válido podem acessar
+        // Endpoint de teste protegido
+        [Authorize]
         [HttpGet("dados-protegidos")]
         public IActionResult GetDadosProtegidos()
         {
-            // Este código pega o ID do usuário que está dentro do token JWT.
             var idUsuario = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (idUsuario == null)
             {
-                // Isso não deve acontecer se o [Authorize] funcionar, mas é uma boa prática
                 return Unauthorized();
             }
 
             return Ok($"Olá, usuário com ID: {idUsuario}! Você conseguiu acessar os dados protegidos.");
         }
-        // ✅ FIM: Adição do endpoint
-        // ==========================================================
+    }
+}
