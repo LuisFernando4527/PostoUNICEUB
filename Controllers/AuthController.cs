@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PostoCeub.Data.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -17,13 +18,16 @@ namespace PostoUNICEUB.Controllers
         public string Senha { get; set; }
     }
 
-    // DTO para receber os dados de cadastro
-    public class RegisterRequest
+    // DTO para receber os dados de ativação/criação de senha
+    public class ActivateAccountRequest
     {
-        public string Nome { get; set; }
+        [Required]
         public string Email { get; set; }
-        public string Telefone { get; set; }
+        [Required]
         public string Senha { get; set; }
+        [Required]
+        [Compare("Senha", ErrorMessage = "As senhas não conferem.")]
+        public string ConfirmarSenha { get; set; }
     }
 
 
@@ -41,35 +45,35 @@ namespace PostoUNICEUB.Controllers
         }
 
         // ==========================================================
-        // ✅ INÍCIO: Adição do endpoint de cadastro
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
+        // ✅ NOVO ENDPOINT DE ATIVAÇÃO DE CONTA
+        [HttpPost("activate-account")]
+        public async Task<IActionResult> ActivateAccount([FromBody] ActivateAccountRequest request)
         {
-            // 1. Verifica se o e-mail já está em uso
-            if (await _context.Usuario.AnyAsync(u => u.edEmail == registerRequest.Email))
+            // 1. Encontra o usuário pelo e-mail
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.edEmail == request.Email);
+
+            // 2. Verifica se o usuário realmente existe no sistema
+            if (usuario == null)
             {
-                return BadRequest("Este e-mail já está em uso.");
+                return BadRequest("Usuário não encontrado. Verifique o e-mail digitado.");
             }
 
-            // 2. Cria a nova entidade Usuario
-            var novoUsuario = new Usuario
+            // 3. Verifica se a conta já foi ativada (se a senha NÃO está vazia)
+            if (!string.IsNullOrEmpty(usuario.senha))
             {
-                nmUsuario = registerRequest.Nome,
-                edEmail = registerRequest.Email,
-                nuTelefone = registerRequest.Telefone,
-                senha = registerRequest.Senha // IMPORTANTE: No mundo real, aqui você faria o HASH da senha
-            };
+                return BadRequest("Esta conta já foi ativada e possui uma senha.");
+            }
 
-            // 3. Salva o novo usuário no banco de dados
-            _context.Usuario.Add(novoUsuario);
+            // 4. Define a nova senha e salva no banco
+            // IMPORTANTE: No mundo real, aqui você faria o HASH da senha
+            usuario.senha = request.Senha;
+            _context.Usuario.Update(usuario);
             await _context.SaveChangesAsync();
 
-            // 4. (Opcional, mas recomendado) Loga o usuário automaticamente gerando um token
-            var token = GenerateJwtToken(novoUsuario);
-
+            // 5. Gera um token para logar o usuário automaticamente após a ativação
+            var token = GenerateJwtToken(usuario);
             return Ok(new { Token = token });
         }
-        // ✅ FIM: Adição do endpoint
         // ==========================================================
 
 
@@ -96,8 +100,6 @@ namespace PostoUNICEUB.Controllers
             return Ok($"Olá, usuário com ID: {idUsuario}! Você conseguiu acessar os dados protegidos.");
         }
 
-        // ==========================================================
-        // ✅ INÍCIO: Método auxiliar para gerar o token
         private string GenerateJwtToken(Usuario usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -119,7 +121,5 @@ namespace PostoUNICEUB.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-        // ✅ FIM: Método auxiliar
-        // ==========================================================
     }
 }
