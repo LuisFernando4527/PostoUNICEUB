@@ -95,5 +95,97 @@ namespace PostoUNICEUB.Controllers
 
             return Ok(resultado);
         }
+
+        [HttpGet("prontuario/{idAtendimento}")]
+        public async Task<IActionResult> ObterProntuario(int idAtendimento)
+        {
+            var prontuario = await _context.Prontuario
+                .Include(p => p.Medico)
+                    .ThenInclude(m => m.Usuario)
+                .Where(p => p.Atendimento.idAtendimento == idAtendimento)
+                .Select(p => new
+                {
+                    p.idProntuario,
+                    p.qp,
+                    p.hda,
+                    p.hpp,
+                    p.exameFisico,
+                    p.hd,
+                    p.conduta,
+                    Medico = p.Medico != null ? p.Medico.Usuario.nmUsuario : null
+                })
+                .FirstOrDefaultAsync();
+
+            if (prontuario == null)
+                return NotFound("Prontuário não encontrado para esse atendimento.");
+
+            return Ok(prontuario);
+        }
+
+        [HttpGet("prescricao-medica/{idAtendimento}")]
+        public async Task<IActionResult> ObterPrescricoesMedicas(int idAtendimento)
+        {
+            var prescricoes = await _context.PrescricaoMedica
+                .Where(p => p.Atendimento.idAtendimento == idAtendimento)
+                .Include(p => p.Medico)
+                    .ThenInclude(m => m.Usuario)
+                .Select(p => new
+                {
+                    p.idPrescricaoMedica,
+                    p.prescricao,
+                    p.horarioPrescricao,
+                    Medico = p.Medico != null ? p.Medico.Usuario.nmUsuario : null
+                })
+                .ToListAsync();
+
+            return Ok(prescricoes);
+        }
+
+        [HttpGet("evolucao-enfermagem/{idAtendimento}")]
+        public async Task<IActionResult> ObterEvolucoesEnfermagem(int idAtendimento)
+        {
+            var evolucoes = await _context.EvolucaoEnfermagem
+                .Where(e => e.Atendimento.idAtendimento == idAtendimento)
+                .Include(e => e.Enfermeiro)
+                    .ThenInclude(enf => enf.Usuario)
+                .Select(e => new
+                {
+                    e.idEvolucaoEnfermagem,
+                    data = e.dataHora.ToString("dd/MM/yyyy"),
+                    hora = e.dataHora.ToString("HH:mm"),
+                    e.evolucao,
+                    Enfermeiro = e.Enfermeiro != null ? e.Enfermeiro.Usuario.nmUsuario : null
+                })
+                .ToListAsync();
+
+            return Ok(evolucoes);
+        }
+
+        [HttpGet("estatisticas-mensais")]
+        public async Task<IActionResult> ObterEstatisticasMensais()
+        {
+            var atendimentos = await _context.Atendimento.ToListAsync();
+
+            var estatisticas = atendimentos
+                .GroupBy(a => new { a.dtAtendimento.Year, a.dtAtendimento.Month })
+                .Select(g => new
+                {
+                    mes = $"{g.Key.Month:D2}/{g.Key.Year}",
+                    manha = g.Count(a => a.dtAtendimento.TimeOfDay < new TimeSpan(12, 0, 0)),
+                    tarde = g.Count(a => a.dtAtendimento.TimeOfDay >= new TimeSpan(12, 0, 0) && a.dtAtendimento.TimeOfDay < new TimeSpan(18, 0, 0)),
+                    noite = g.Count(a => a.dtAtendimento.TimeOfDay >= new TimeSpan(18, 0, 0)),
+                    total = g.Count()
+                })
+                .OrderBy(e => e.mes)
+                .ToList();
+
+            return Ok(estatisticas);
+        }
+
+
+
+
+
+
     }
 }
