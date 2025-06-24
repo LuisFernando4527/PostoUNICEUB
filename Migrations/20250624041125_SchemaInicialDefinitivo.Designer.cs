@@ -12,7 +12,7 @@ using PostoCeub.Data.Entities;
 namespace PostoUNICEUB.Migrations
 {
     [DbContext(typeof(PostoCeubDbContext))]
-    [Migration("20250624040406_SchemaInicialDefinitivo")]
+    [Migration("20250624041125_SchemaInicialDefinitivo")]
     partial class SchemaInicialDefinitivo
     {
         /// <inheritdoc />

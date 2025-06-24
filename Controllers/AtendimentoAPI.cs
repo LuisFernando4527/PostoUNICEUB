@@ -18,6 +18,33 @@ namespace PostoUNICEUB.Controllers
             _context = context;
         }
 
+        // ==========================================================
+        // ✅ NOVO ENDPOINT ADICIONADO PARA LISTAR TODOS OS ATENDIMENTOS (SEM FILTRO)
+        // Este método será acessado em: /api/Atendimento
+        [HttpGet]
+        public async Task<IActionResult> GetTodosAtendimentos()
+        {
+            var resultados = await _context.Atendimento
+                .Include(a => a.Paciente)
+                .Include(a => a.Medico).ThenInclude(m => m.Usuario)
+                .Include(a => a.Enfermeiro).ThenInclude(e => e.Usuario)
+                .Select(a => new
+                {
+                    idAtendimento = a.idAtendimento,
+                    dia = a.dtAtendimento.ToString("yyyy-MM-dd"),
+                    hora = a.dtAtendimento.ToString("HH:mm"),
+                    paciente = a.Paciente.nmPaciente,
+                    medico = a.Medico != null ? a.Medico.Usuario.nmUsuario : "",
+                    enfermeiro = a.Enfermeiro != null ? a.Enfermeiro.Usuario.nmUsuario : "",
+                    status = (int)a.status
+                })
+                .ToListAsync();
+
+            return Ok(resultados);
+        }
+        // ==========================================================
+
+
         [HttpGet("buscar")]
         public async Task<IActionResult> BuscarAtendimentos([FromQuery] string busca)
         {
@@ -181,11 +208,5 @@ namespace PostoUNICEUB.Controllers
 
             return Ok(estatisticas);
         }
-
-
-
-
-
-
     }
 }
