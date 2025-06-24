@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5IA7LHt8eiNNlPt/S0sKsqsHYkDPnscqcM1EC6OjJs0=",
+  "Hash": "6/IKOettsEgM6U4BsNusxlwlIllodyz4JriQK4Te9t4=",
   "Source": "PostoUNICEUB",
   "BasePath": "_content/PostoUNICEUB",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\checkmark.png"
+    },
+    {
+      "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\login.png",
+      "SourceId": "PostoUNICEUB",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\",
+      "BasePath": "_content/PostoUNICEUB",
+      "RelativePath": "assets/login.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\login.png"
     },
     {
       "Identity": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\search.svg",

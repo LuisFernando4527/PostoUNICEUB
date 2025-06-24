@@ -44,49 +44,49 @@
                         <span asp-validation-for="Paciente.nuCelular" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="ceub-form-group">
+                    <label asp-for="Paciente.nuCPF">CPF</label>
+                    <input asp-for="Paciente.nuCPF" id="Paciente_nuCPF" />
+                    <span asp-validation-for="Paciente.nuCPF" class="text-danger"></span>
+                </div>
+                <div class="ceub-form-group">
+                    <label asp-for="Paciente.dtNascimento">Data de Nascimento</label>
+                    <input asp-for="Paciente.dtNascimento" type="date" />
+                    <span asp-validation-for="Paciente.dtNascimento" class="text-danger"></span>
+                </div>
+
+                <!-- Student fields -->
+                <div id="aluno-fields" style="display: block;">
                     <div class="ceub-form-group">
-                        <label asp-for="Paciente.nuCPF">CPF</label>
-                        <input asp-for="Paciente.nuCPF" />
-                        <span asp-validation-for="Paciente.nuCPF" class="text-danger"></span>
+                        <label asp-for="Aluno.curso">Curso</label>
+                        <input asp-for="Aluno.curso" id="aluno-curso" />
+                        <span asp-validation-for="Aluno.curso" class="text-danger"></span>
                     </div>
                     <div class="ceub-form-group">
-                        <label asp-for="Paciente.dtNascimento">Data de Nascimento</label>
-                        <input asp-for="Paciente.dtNascimento" />
-                        <span asp-validation-for="Paciente.dtNascimento" class="text-danger"></span>
+                        <label asp-for="Aluno.ra">RA</label>
+                        <input asp-for="Aluno.ra" id="aluno-ra" />
+                        <span asp-validation-for="Aluno.ra" class="text-danger"></span>
                     </div>
+                </div>
 
-                    <!-- Student fields -->
-                    <div id="aluno-fields" style="display: block;">
-                        <div class="ceub-form-group">
-                            <label asp-for="Aluno.curso">Curso</label>
-                            <input asp-for="Aluno.curso" id="aluno-curso" />
-                            <span asp-validation-for="Aluno.curso" class="text-danger"></span>
-                        </div>
-                        <div class="ceub-form-group">
-                            <label asp-for="Aluno.ra">RA</label>
-                            <input asp-for="Aluno.ra" id="aluno-ra" />
-                            <span asp-validation-for="Aluno.ra" class="text-danger"></span>
-                        </div>
+                <!-- Collaborator fields -->
+                <div id="colaborador-fields" style="display: none;">
+                    <div class="ceub-form-group">
+                        <label asp-for="Colaborador.departamento">Departamento</label>
+                        <input asp-for="Colaborador.departamento" id="colaborador-departamento" />
+                        <span asp-validation-for="Colaborador.departamento" class="text-danger"></span>
                     </div>
-
-                    <!-- Collaborator fields -->
-                    <div id="colaborador-fields" style="display: none;">
-                        <div class="ceub-form-group">
-                            <label asp-for="Colaborador.departamento">Departamento</label>
-                            <input asp-for="Colaborador.departamento" id="colaborador-departamento" />
-                            <span asp-validation-for="Colaborador.departamento" class="text-danger"></span>
-                        </div>
-                        <div class="ceub-form-group">
-                            <label asp-for="Colaborador.matricula">Matr�cula</label>
-                            <input asp-for="Colaborador.matricula" id="colaborador-matricula" />
-                            <span asp-validation-for="Colaborador.matricula" class="text-danger"></span>
-                        </div>
+                    <div class="ceub-form-group">
+                        <label asp-for="Colaborador.matricula">Matrícula</label>
+                        <input asp-for="Colaborador.matricula" id="colaborador-matricula" />
+                        <span asp-validation-for="Colaborador.matricula" class="text-danger"></span>
                     </div>
+                </div>
 
-                    <!-- External patient has no additional fields -->
+                <!-- External patient has no additional fields -->
 
-                    <button type="submit">Cadastrar</button>
-</form>
+                <button type="submit">Cadastrar</button>
+            </form>
         </div>
     </div>
 </body>
@@ -95,6 +95,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
 <script>
 
@@ -153,3 +154,30 @@
         button.classList.add('active');
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const cpfInput = document.querySelector('input[name="Paciente.nuCPF"]');
+
+        // Máscara ao digitar (como já está feito)
+        cpfInput.addEventListener('input', function () {
+            let value = cpfInput.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            let formatted = '';
+            if (value.length > 0) formatted = value.slice(0, 3);
+            if (value.length >= 4) formatted += '.' + value.slice(3, 6);
+            if (value.length >= 7) formatted += '.' + value.slice(6, 9);
+            if (value.length >= 10) formatted += '-' + value.slice(9, 11);
+            cpfInput.value = formatted;
+        });
+
+        // Remover máscara ao enviar o formulário
+        form.addEventListener("submit", function () {
+            cpfInput.value = cpfInput.value.replace(/\D/g, '');
+        });
+    });
+</script>
+
+
+
+

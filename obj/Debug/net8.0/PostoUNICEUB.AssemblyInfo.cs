@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PostoUNICEUB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad2b173161428d2beb555a319a3e58e6c64d92a7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a84c80fac9fe9586e3a327d04666b57c4e104c85")]
 [assembly: System.Reflection.AssemblyProductAttribute("PostoUNICEUB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PostoUNICEUB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

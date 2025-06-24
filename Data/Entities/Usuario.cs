@@ -17,4 +17,8 @@ public class Usuario
     [Column(TypeName = "varchar(20)")]
     public string nuTelefone { get; set; }
 
+    [Column(TypeName = "varchar(100)")]
+    public string senha { get; set; }
+
+
 }

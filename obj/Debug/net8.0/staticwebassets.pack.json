@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\assets\\checkmark.png"
     },
     {
+      "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\login.png",
+      "PackagePath": "staticwebassets\\assets\\login.png"
+    },
+    {
       "Id": "C:\\Users\\lucas\\projects\\PostoUNICEUB\\wwwroot\\assets\\search.svg",
       "PackagePath": "staticwebassets\\assets\\search.svg"
     },

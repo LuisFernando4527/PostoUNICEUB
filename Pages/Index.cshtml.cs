@@ -53,8 +53,14 @@ namespace PostoUNICEUB.Pages
         public List<AtendimentoCardModel> AtendimentosNaoPreenchiveisPaginados { get; set; } = new();
 
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var perfil = HttpContext.Session.GetString("Perfil");
+            if (string.IsNullOrEmpty(perfil))
+            {
+                return RedirectToPage("/Login");
+            }
+
             var lista = await ObterTodosAtendimentosOrdenadosPorDataDesc();
 
             foreach (var atendimento in lista)
@@ -115,7 +121,7 @@ namespace PostoUNICEUB.Pages
                     .Take(PageSize)
                     .ToList();
             }
-
+            return Page();
         }
 
         private async Task<List<Atendimento>> ObterTodosAtendimentosOrdenadosPorDataDesc()
