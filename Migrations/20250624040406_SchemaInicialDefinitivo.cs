@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace PostoUNICEUB.Migrations
 {
     /// <inheritdoc />
-    public partial class nre : Migration
+    public partial class SchemaInicialDefinitivo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,7 +49,8 @@ namespace PostoUNICEUB.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nmUsuario = table.Column<string>(type: "varchar(100)", nullable: false),
                     edEmail = table.Column<string>(type: "varchar(100)", nullable: false),
-                    nuTelefone = table.Column<string>(type: "varchar(20)", nullable: false)
+                    nuTelefone = table.Column<string>(type: "varchar(20)", nullable: false),
+                    senha = table.Column<string>(type: "varchar(200)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -143,10 +145,11 @@ namespace PostoUNICEUB.Migrations
                 {
                     idAtendimento = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    dtAtendimento = table.Column<string>(type: "varchar(20)", nullable: false),
+                    dtAtendimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     idPaciente = table.Column<int>(type: "int", nullable: false),
-                    idEnfermeiro = table.Column<int>(type: "int", nullable: false),
-                    idMedico = table.Column<int>(type: "int", nullable: false)
+                    idEnfermeiro = table.Column<int>(type: "int", nullable: true),
+                    idMedico = table.Column<int>(type: "int", nullable: true),
+                    status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,7 +206,7 @@ namespace PostoUNICEUB.Migrations
                     dataHora = table.Column<string>(type: "varchar(50)", nullable: false),
                     evolucao = table.Column<string>(type: "varchar(500)", nullable: false),
                     idAtendimento = table.Column<int>(type: "int", nullable: false),
-                    idEnfermeiro = table.Column<int>(type: "int", nullable: false)
+                    idEnfermeiro = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -218,8 +221,7 @@ namespace PostoUNICEUB.Migrations
                         name: "FK_EvolucaoEnfermagem_Enfermeiro_idEnfermeiro",
                         column: x => x.idEnfermeiro,
                         principalTable: "Enfermeiro",
-                        principalColumn: "idEnfermeiro",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "idEnfermeiro");
                 });
 
             migrationBuilder.CreateTable(
@@ -230,7 +232,7 @@ namespace PostoUNICEUB.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     anotacao = table.Column<string>(type: "varchar(500)", nullable: false),
                     idAtendimento = table.Column<int>(type: "int", nullable: false),
-                    idEnfermeiro = table.Column<int>(type: "int", nullable: false)
+                    idEnfermeiro = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -242,11 +244,10 @@ namespace PostoUNICEUB.Migrations
                         principalColumn: "idAtendimento",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PrescricaoEnfermagem_Medico_idEnfermeiro",
+                        name: "FK_PrescricaoEnfermagem_Enfermeiro_idEnfermeiro",
                         column: x => x.idEnfermeiro,
-                        principalTable: "Medico",
-                        principalColumn: "idMedico",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Enfermeiro",
+                        principalColumn: "idEnfermeiro");
                 });
 
             migrationBuilder.CreateTable(
@@ -258,7 +259,7 @@ namespace PostoUNICEUB.Migrations
                     prescricao = table.Column<string>(type: "varchar(500)", nullable: false),
                     horarioPrescricao = table.Column<string>(type: "varchar(50)", nullable: false),
                     idAtendimento = table.Column<int>(type: "int", nullable: false),
-                    idMedico = table.Column<int>(type: "int", nullable: false)
+                    idMedico = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -273,8 +274,7 @@ namespace PostoUNICEUB.Migrations
                         name: "FK_PrescricaoMedica_Medico_idMedico",
                         column: x => x.idMedico,
                         principalTable: "Medico",
-                        principalColumn: "idMedico",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "idMedico");
                 });
 
             migrationBuilder.CreateTable(
@@ -290,7 +290,7 @@ namespace PostoUNICEUB.Migrations
                     hd = table.Column<string>(type: "varchar(100)", nullable: false),
                     conduta = table.Column<string>(type: "varchar(500)", nullable: false),
                     idAtendimento = table.Column<int>(type: "int", nullable: false),
-                    idMedico = table.Column<int>(type: "int", nullable: false)
+                    idMedico = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -305,8 +305,7 @@ namespace PostoUNICEUB.Migrations
                         name: "FK_Prontuario_Medico_idMedico",
                         column: x => x.idMedico,
                         principalTable: "Medico",
-                        principalColumn: "idMedico",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "idMedico");
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,8 +12,8 @@ using PostoCeub.Data.Entities;
 namespace PostoUNICEUB.Migrations
 {
     [DbContext(typeof(PostoCeubDbContext))]
-    [Migration("20250521002811_AddStatusToAtendimento")]
-    partial class AddStatusToAtendimento
+    [Migration("20250624040406_SchemaInicialDefinitivo")]
+    partial class SchemaInicialDefinitivo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,9 +58,6 @@ namespace PostoUNICEUB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idAtendimento"));
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("dtAtendimento")
                         .HasColumnType("datetime2");
 
@@ -71,6 +68,9 @@ namespace PostoUNICEUB.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("idPaciente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("status")
                         .HasColumnType("int");
 
                     b.HasKey("idAtendimento");
@@ -384,6 +384,10 @@ namespace PostoUNICEUB.Migrations
                     b.Property<string>("nuTelefone")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
+
+                    b.Property<string>("senha")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
 
                     b.HasKey("idUsuario");
 
