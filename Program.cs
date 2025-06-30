@@ -15,7 +15,8 @@ if (args.Length > 0)
         roleMock = roleArg;
     }
 }
-builder.Services.AddDistributedMemoryCache(); // <- ESSENCIAL!
+
+builder.Services.AddDistributedMemoryCache(); // ← ESSENCIAL para sessões
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -25,7 +26,6 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserRoleService, SessionUserRoleService>();
 
-
 // 🔹 Serviços
 builder.Services.AddDbContext<PostoCeubDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionSqlServer")));
@@ -34,14 +34,6 @@ builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// ✅ Sessão configurada
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 
 var app = builder.Build();
 
@@ -55,7 +47,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseSession();       // ✅ Sessão precisa vir ANTES da autorização
+app.UseSession();       // ✅ Sessão ANTES de authorization
 app.UseAuthorization();
 
 app.UseSwagger();
